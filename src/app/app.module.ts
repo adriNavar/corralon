@@ -1,9 +1,12 @@
+import { ConfiguracionServicio } from './servicios/configuracion.service';
+import { AuthGuard } from './guardianes/auth.guard';
+import { LoginService } from './servicios/login-service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from '../environments/environment';
 import {AngularFireModule } from '@angular/fire/compat';
 import {AngularFirestoreModule,Settings} from '@angular/fire/compat/firestore';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireAuthModule, SETTINGS } from '@angular/fire/compat/auth';
 import { FlashMessage } from 'angular2-flash-messages/module/flash-message';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { FormsModule } from '@angular/forms';
@@ -41,9 +44,14 @@ import { ClienteServicio } from './servicios/cliente.service';
     AngularFirestoreModule,
     AngularFireAuthModule,
     FormsModule,
-    FlashMessagesModule.forRoot()
+    FlashMessagesModule.forRoot(),
+
   ],
-  providers: [ClienteServicio],
+  providers: [ClienteServicio,
+    LoginService,
+    AuthGuard,
+    ConfiguracionServicio,
+    {provide:SETTINGS,useValue:{}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

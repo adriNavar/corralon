@@ -5,38 +5,58 @@
       class="navbar-toggler"
       data-bs-toggle="collapse"
       data-bs-target="#navbarCollapse"
-      (click)="mostrarREsponsive_menu= !mostrarREsponsive_menu">
+      (click)="mostrarREsponsive_menu = !mostrarREsponsive_menu"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <!-- el collapse es para que sea responsive el menu -->
-  </div>
+
     <div
       class="collapse navbar-collapse"
       id="navbarCollapse"
-      [ngClass]="{ show: mostrarREsponsive_menu }">
-      <ul class="navbar-nav">
+      [ngClass]="{ show: mostrarREsponsive_menu }"
+    >
+      <ul *ngIf="isLoggedIn" class="navbar-nav">
         <li class="nav-item px-2">
           <a routerLink="/" class="nav-link">Inicio</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown mr-2">
+        <li *ngIf="isLoggedIn" class="nav-item dropdown mr-2">
+
           <a
             href="#"
             class="nav-link dropdown-toggle"
             data-bs-toggle="dropdown"
-            (click)="mostrarREsponsive_menu= !mostrarREsponsive_menu">
-            <i class="fas fa-user"></i>Bienvenido
+            (click)="mostrarREsponsive_menu = !mostrarREsponsive_menu"
+          >
+
+            <i class="fas fa-user"></i>Bienvenido {{loggedInUser}}
           </a>
           <div
             class="dropdown-menu"
-            [ngClass]="{ show: mostrarREsponsive_menu }">
+            [ngClass]="{ show: mostrarREsponsive_menu }"
+          >
             <a routerLink="/configuracion" class="dropdown-item">
               <i class="fas fa-cog"></i> Configuración
             </a>
           </div>
         </li>
+        <li *ngIf="!isLoggedIn" class="nav-item">
+          <a routerLink="/login" class="nav-link" routerLinkActive="router-link-active">
+          <i class="fas fa-user"></i>Login</a>
+        </li>
+        <li *ngIf="!isLoggedIn" class="nav-item">
+          <a routerLink="/registrarse" class="nav-link" routerLinkActive="router-link-active">
+          <i class="fas fa-user"></i>Registro</a>
+        </li>
+        <li *ngIf="isLoggedIn" class="nav-item">
+          <a style="cursor:pointer" (click)="logout()" class="nav-link">
+            Salir <i class="fa fa-sign-out"></i></a>
+
+        </li>
       </ul>
     </div>
-
+  </div>
 </nav>

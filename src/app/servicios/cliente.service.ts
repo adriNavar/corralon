@@ -33,4 +33,38 @@ export class ClienteServicio{
     return this.clientes;
   }
 
+  agregarCliente(cliente:Cliente){
+    this.clientesColeccion.add(cliente);
+
+  }
+
+  getCliente(id:string){
+    this.clienteDoc=this.db.doc<Cliente>(`clientes/${id}`);
+    this.cliente=this.clienteDoc.snapshotChanges().pipe(
+      map(accion=>{
+        if(accion.payload.exists===false){
+          return null;
+        }
+        else{
+          const datos=accion.payload.data()as Cliente;
+          datos.id=accion.payload.id;
+          return datos;
+        }
+      }
+
+      )
+    );//aca recuperamos el cliente de la db
+    return this.cliente;
+  }
+
+  modificarCliente(cliente:Cliente){
+    this.clienteDoc=this.db.doc<Cliente>(`clientes/${cliente.id}`);
+    this.clienteDoc.update(cliente);
+  }
+
+  eliminarCliente(cliente:Cliente){
+  this.clienteDoc=this.db.doc<Cliente>(`clientes/${cliente.id}`);
+  this.clienteDoc.delete();
+  }
+
 }
