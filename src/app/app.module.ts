@@ -1,3 +1,4 @@
+import { ConfiguracionGuard } from './guardianes/configuracion.guard';
 import { ConfiguracionServicio } from './servicios/configuracion.service';
 import { AuthGuard } from './guardianes/auth.guard';
 import { LoginService } from './servicios/login-service';
@@ -51,6 +52,7 @@ import { ClienteServicio } from './servicios/cliente.service';
     LoginService,
     AuthGuard,
     ConfiguracionServicio,
+    ConfiguracionGuard,
     {provide:SETTINGS,useValue:{}}],
   bootstrap: [AppComponent]
 })
