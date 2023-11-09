@@ -16,43 +16,41 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CabeceroComponent } from './componentes/cabecero/cabecero.component';
 import { TableroComponent } from './componentes/tablero/tablero.component';
-import { ClientesComponent } from './componentes/clientes/clientes.component';
-import { EditarClienteComponent } from './componentes/editar-cliente/editar-cliente.component';
+
+
 import { LoginComponent } from './componentes/login/login.component';
 import { RegistroComponent } from './componentes/registro/registro.component';
 import { ConfiguracionComponent } from './componentes/configuracion/configuracion.component';
 import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado.component';
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
-import { ClienteServicio } from './servicios/cliente.service';
+
 import { ProductosComponent } from './componentes/productos/productos.component';
 import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
-
+import { ProductoServicio } from './servicios/producto.service';
 @NgModule({
   declarations: [
     AppComponent,
     CabeceroComponent,
     TableroComponent,
-    ClientesComponent,
-    EditarClienteComponent,
+    ProductosComponent, // Agrega el componente de productos
+    EditarProductoComponent, // Agrega el componente de editar producto
     LoginComponent,
     RegistroComponent,
     ConfiguracionComponent,
     NoEncontradoComponent,
     PiePaginaComponent,
-    ProductosComponent,
-    EditarProductoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firestore,'control-cliente'),// Aca se hace la conexion con la db
+    AngularFireModule.initializeApp(environment.firestore,'corralon'),// Aca se hace la conexion con la db
     AngularFirestoreModule,
     AngularFireAuthModule,
     FormsModule,
     FlashMessagesModule.forRoot(),
 
   ],
-  providers: [ClienteServicio,
+  providers: [ProductoServicio,
     LoginService,
     AuthGuard,
     ConfiguracionServicio,
