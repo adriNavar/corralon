@@ -8,13 +8,14 @@ import { RegistroComponent } from './componentes/registro/registro.component';
 import { TableroComponent } from './componentes/tablero/tablero.component';
 import { AuthGuard } from './guardianes/auth.guard';
 import { ConfiguracionGuard } from './guardianes/configuracion.guard';
+import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
 
 const routes: Routes = [
   {path:'',component: TableroComponent,canActivate: [AuthGuard]},
   {path:'login',component: LoginComponent},
   {path:'registrarse',component: RegistroComponent,canActivate: [ConfiguracionGuard]},
   {path:'configuracion',component: ConfiguracionComponent,canActivate: [AuthGuard]},
-  {path:'cliente/editar/:id',component: EditarClienteComponent,canActivate: [AuthGuard]},
+  {path:'producto/editar/:id',component: EditarProductoComponent,canActivate: [AuthGuard]},
   {path:'**',component: NoEncontradoComponent},
 ];
 

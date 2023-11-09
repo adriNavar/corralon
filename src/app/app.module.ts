@@ -24,6 +24,8 @@ import { ConfiguracionComponent } from './componentes/configuracion/configuracio
 import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado.component';
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
 import { ClienteServicio } from './servicios/cliente.service';
+import { ProductosComponent } from './componentes/productos/productos.component';
+import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { ClienteServicio } from './servicios/cliente.service';
     RegistroComponent,
     ConfiguracionComponent,
     NoEncontradoComponent,
-    PiePaginaComponent
+    PiePaginaComponent,
+    ProductosComponent,
+    EditarProductoComponent
   ],
   imports: [
     BrowserModule,
