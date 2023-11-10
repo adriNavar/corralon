@@ -27,6 +27,9 @@ import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.componen
 import { ProductosComponent } from './componentes/productos/productos.component';
 import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
 import { ProductoServicio } from './servicios/producto.service';
+import { CategoriaServicio } from './servicios/categoria.service';
+import { CategoriasComponent } from './componentes/categorias/categorias.component';
+import { EditarCategoriaComponent } from './componentes/editar-categoria/editar-categoria.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +42,8 @@ import { ProductoServicio } from './servicios/producto.service';
     ConfiguracionComponent,
     NoEncontradoComponent,
     PiePaginaComponent,
+    CategoriasComponent,
+    EditarCategoriaComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +60,7 @@ import { ProductoServicio } from './servicios/producto.service';
     AuthGuard,
     ConfiguracionServicio,
     ConfiguracionGuard,
+    CategoriaServicio,
     {provide:SETTINGS,useValue:{}}],
   bootstrap: [AppComponent]
 })
