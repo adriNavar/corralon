@@ -1,8 +1,9 @@
 @import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,300&display=swap');
 
 /* Estilos adicionales globales */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Lato-sans', Arial, sans-serif;
     margin: 0;
     padding: 0;
     border: 0;
@@ -10,10 +11,23 @@ body {
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
-    border-top: 5px solid #0073e6;
+    border-top: 10px solid #003870;
 }
 
 .contenido {
-    background-color: rgba(203, 203, 212, 0.438);
     padding: 3rem 3rem;
+    height: 60vh;
+    background-image: url('./assets/background4-corralon.jpeg');
+    background-size: cover;
+    background-position: center;
 }
+
+/* Media query para dispositivos con pantalla de hasta 768px de ancho */
+@media (max-width: 768px) {
+    .contenido {
+      padding: 1rem; /* Ajusta el padding para tamaños más pequeños */
+      height: auto; /* Ajusta la altura según el contenido */
+      background-size: auto; /* Ajusta el tamaño de fondo */
+      height: 80vh;
+    }
+  }

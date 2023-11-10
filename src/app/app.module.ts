@@ -11,6 +11,8 @@ import { AngularFireAuthModule, SETTINGS } from '@angular/fire/compat/auth';
 import { FlashMessage } from 'angular2-flash-messages/module/flash-message';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -50,7 +52,7 @@ import { EditarProductoComponent } from './componentes/editar-producto/editar-pr
     AngularFireAuthModule,
     FormsModule,
     FlashMessagesModule.forRoot(),
-
+    BrowserAnimationsModule,
   ],
   providers: [ClienteServicio,
     LoginService,

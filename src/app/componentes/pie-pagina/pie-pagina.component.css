@@ -7,3 +7,37 @@ footer {
     text-align: center;
     margin-bottom: 0;
 }
+
+/* En tu archivo de estilos global o específico del componente */
+footer {
+    width: 100%;
+    background-color: #000d1a; /* Cambia esto al color que desees */
+    color: #fff; /* Color del texto */
+    padding: 20px 0;
+    font-size: 1.1rem;
+    bottom: 0;
+    margin-bottom: 0;
+    align-self: flex-end;
+    height: 25vh;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-content {
+    text-align: center;
+  }
+  
+  .social-icons a {
+    color: #fff; /* Color de los iconos de redes sociales */
+    margin: 0 10px;
+    font-size: 24px;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    color: #ffd700; /* Cambia esto al color de hover deseado */
+  }
+  

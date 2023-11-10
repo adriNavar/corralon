@@ -1,0 +1,20 @@
+.card-header {
+    background-color: #003870;
+    color: #ffff;
+    text-align: center;
+}
+
+#login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem 1rem;
+}
+
+h4 {
+    font-size: 1.2rem;
+}
+
+.btn-login {
+    width: 100%;
+}
