@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'normalize.css';
+
+/* Estilos adicionales globales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 17px;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+    border-top: 5px solid #0073e6;
+}
+
+.contenido {
+    background-color: rgba(203, 203, 212, 0.438);
+    padding: 3rem 3rem;
+}
