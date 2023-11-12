@@ -4,15 +4,21 @@
     text-align: center;
 }
 
+.card-header h4 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
 #login {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 3rem 1rem;
+    margin: 1rem 0.5rem;
 }
 
 h4 {
     font-size: 1.2rem;
+    font-weight: 500;
 }
 
 .btn-login {

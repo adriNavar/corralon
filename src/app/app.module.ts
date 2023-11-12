@@ -28,6 +28,9 @@ import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.componen
 import { ClienteServicio } from './servicios/cliente.service';
 import { ProductosComponent } from './componentes/productos/productos.component';
 import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
+import { ProductoServicio } from './servicios/producto.service';
+import { LoaderComponent } from './componentes/loader/loader.component';
+import { LoaderService } from './servicios/loader.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import { EditarProductoComponent } from './componentes/editar-producto/editar-pr
     NoEncontradoComponent,
     PiePaginaComponent,
     ProductosComponent,
-    EditarProductoComponent
+    EditarProductoComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,8 @@ import { EditarProductoComponent } from './componentes/editar-producto/editar-pr
     AuthGuard,
     ConfiguracionServicio,
     ConfiguracionGuard,
+    ProductoServicio,
+    LoaderService,
     {provide:SETTINGS,useValue:{}}],
   bootstrap: [AppComponent]
 })

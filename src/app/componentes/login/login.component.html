@@ -1,4 +1,5 @@
-<flash-messages></flash-messages>
+<app-loader *ngIf="isLoading"></app-loader>
+
 
 <section id="login" [@slideUp]>
   <div class="container">
@@ -18,7 +19,7 @@
                     <h4>Ingresá con tu cuenta</h4>
                   </div>
                   <div class="card-body">
-                    <form (submit)="login()">
+                    <form (submit)="login($event)">
                       <div class="form-group">
                         <label for="email">Correo</label>
                         <input
