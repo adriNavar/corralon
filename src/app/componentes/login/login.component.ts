@@ -44,58 +44,62 @@ export class LoginComponent implements OnInit {
          this.router.navigate(['/'])
        }
      });
+  }
 
+  showAlert(title: string, text: string, icon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'info'): void {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+    });
   }
 
 
   login() {
-    console.log(this.email, this.password); // Agrega este console.log
-
+    console.log(this.email, this.password);
+  
     // Mostrar el loader
     this.loaderService.showLoader();
-
+  
     // Algunas validaciones
-    if(this.email === undefined || this.email === "" || this.password === "" || this.password === undefined) {
+    if (this.email === undefined || this.email === "" || this.password === "" || this.password === undefined) {
+      const sweetAlertTitle: string = 'No se ha podido iniciar sesión, verifique los datos';
+      const sweetAlertText: string = 'No pueden existir campos vacíos';
+      const sweetAlertIcon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'error';
+      this.loaderService.hideLoader();
+      this.showAlert(sweetAlertTitle, sweetAlertText, sweetAlertIcon);
+      return;
+    }
+  
+    this.loginService.login(this.email, this.password)
+      .then(res => {
         this.loaderService.hideLoader();
-        Swal.fire({
-          icon: 'error',
-          title: 'No se ha podido iniciar sesión, verifique los datos',
-          text: 'No pueden existir campos vacíos',
-        });
-        return;
-      }
-
-    this.loginService.login(this.email,this.password)
-    .then(res =>{
-      this.loaderService.hideLoader();
-      this.router.navigate(['/']);
-    })
-    .catch(error=>{
-      this.loaderService.hideLoader();
-
-      // Manejar errores específicos de Firebase
-      if (error.code === 'auth/invalid-login-credentials') {
-        // Utiliza SweetAlert2 para mostrar el mensaje de error
-        Swal.fire({
-          icon: 'error',
-          title: 'No se ha podido iniciar sesión, verifique los datos',
-          text: 'DATOS INVÁLIDOS !',
-        });
-        return;
-        // Puedes mostrar un mensaje al usuario o realizar alguna acción específica
-      } else {
-        // Manejar otros errores de Firebase o desconocidos
-        Swal.fire({
-          icon: 'error',
-          title: 'No se ha podido iniciar sesión, verifique los datos',
-          text: 'ERROR DE LOGIN !',
-        });
-        return;
-      }
-      // Utiliza SweetAlert2 para mostrar el mensaje de error
-      
-    });
-
-    this.cdr.detectChanges();
+        // Realizar acciones directamente dentro de la promesa
+        this.router.navigate(['/']);
+      })
+      .catch(error => {
+        this.loaderService.hideLoader();
+  
+        if (error.code === 'auth/invalid-login-credentials') {
+          const sweetAlertTitle: string = 'No se ha podido iniciar sesión, verifique los datos';
+          const sweetAlertText: string = 'Los datos no son correctos !';
+          const sweetAlertIcon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'warning';
+          this.showAlert(sweetAlertTitle, sweetAlertText, sweetAlertIcon);
+          return;
+        } else if (error.code === 'auth/invalid-email') {
+          const sweetAlertTitle: string = 'No se ha podido iniciar sesión, verifique los datos';
+          const sweetAlertText: string = 'El formato del email es incorrecto !';
+          const sweetAlertIcon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'warning';
+          this.showAlert(sweetAlertTitle, sweetAlertText, sweetAlertIcon);
+          return;
+        } else {
+          const sweetAlertTitle: string = 'No se ha podido iniciar sesión';
+          const sweetAlertText: string = 'Error externo, por favor intente nuevamente en breve !';
+          const sweetAlertIcon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'info';
+          this.showAlert(sweetAlertTitle, sweetAlertText, sweetAlertIcon);
+          return;
+        }
+      });
   }
+  
 }

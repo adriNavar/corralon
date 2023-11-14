@@ -15,19 +15,21 @@ body {
 }
 
 .contenido {
-    padding: 3rem 3rem;
+    padding: 2rem 3rem;
     height: 60vh;
     background-image: url('./assets/background4-corralon.jpeg');
     background-size: cover;
     background-position: center;
 }
 
-/* Media query para dispositivos con pantalla de hasta 768px de ancho */
-@media (max-width: 768px) {
-    .contenido {
-      padding: 1rem; /* Ajusta el padding para tamaños más pequeños */
-      height: auto; /* Ajusta la altura según el contenido */
-      background-size: auto; /* Ajusta el tamaño de fondo */
-      height: 80vh;
-    }
+/* Consulta de medios para pantallas más pequeñas, por ejemplo, móviles */
+@media only screen and (max-width: 767px) {
+  .contenido {
+    padding: 1rem; /* Ajusta el padding para tamaños más pequeños */
+    height: auto; /* Ajusta la altura según el contenido */
+    background-size: auto; /* Ajusta el tamaño de fondo */
+    height: 80vh;
   }
+}
+
+
