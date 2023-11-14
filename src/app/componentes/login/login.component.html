@@ -1,6 +1,5 @@
 <app-loader *ngIf="isLoading"></app-loader>
 
-
 <section id="login" [@slideUp]>
   <div class="container">
     <div class="row">
@@ -16,10 +15,10 @@
                 <!-- Cuadrante derecho con el formulario -->
                 <div class="card">
                   <div class="card-header">
-                    <h4>Ingresá con tu cuenta</h4>
+                    <h4>Ingresá con tu cuenta {{isLoading ? 'LOADING' : 'NO-LOADER'}}</h4>
                   </div>
                   <div class="card-body">
-                    <form (submit)="login($event)">
+                    <form (submit)="login()">
                       <div class="form-group">
                         <label for="email">Correo</label>
                         <input
