@@ -5,8 +5,8 @@ import { map } from "rxjs";
 @Injectable()
 export class LoginService{
   constructor(private authService:AngularFireAuth){
+}
 
-  }
   login(email:string,password:string){
     return new Promise((resolve,rejet)=>{
       this.authService.signInWithEmailAndPassword(email,password)
@@ -14,13 +14,12 @@ export class LoginService{
       error=> rejet(error)
     )
     })
-
   }
 
   getAuth(){
-  return this.authService.authState.pipe( // con esto traemos el usuario que se logeo
-    map(auth => auth)
-  );
+    return this.authService.authState.pipe( // con esto traemos el usuario que se logeo
+      map(auth => auth)
+    );
   }
   logout(){
     this.authService.signOut();

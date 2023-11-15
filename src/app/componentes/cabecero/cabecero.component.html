@@ -1,5 +1,60 @@
+<app-loader></app-loader>
+
 <header>
-  <div class="logo-container">
-    <img src="/assets/corralon.svg" alt="Corralon SVG" class="img-svg"><h1 class="title">CORRALÓN SAN CAYETANO</h1>
+  <div class="container">
+    <img src="/assets/corralon.svg" alt="Corralon SVG" class="img-svg">
+    <h1 class="title" style="cursor: pointer;">CORRALÓN SAN CAYETANO</h1>
+
+    <nav class="navbar navbar-expand-sm p-0 d-inline-block">
+      <div class="container">
+        <ul *ngIf="!isLoggedIn" class="navbar-nav">
+          <li class="nav-item px-2">
+            <a routerLink="/" class="nav-link">Inicio</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li *ngIf="isLoggedIn" class="nav-item dropdown mr-2">
+            <a
+              href="#"
+              class="nav-link dropdown-toggle"
+              data-bs-toggle="dropdown"
+              (click)="mostrarREsponsive_menu = !mostrarREsponsive_menu"
+            >
+              <i class="fas fa-user"></i>Bienvenido <b>{{loggedInUser}}</b>
+            </a>
+            <div
+              class="dropdown-menu"
+              [ngClass]="{ show: mostrarREsponsive_menu }"
+            >
+              <a routerLink="/configuracion" class="dropdown-item">
+                <i class="fas fa-cog"></i> Configuración
+              </a>
+            </div>
+          </li>
+          <li *ngIf="!isLoggedIn && permitirRegistro" class="nav-item">
+            <a routerLink="/login" class="nav-link" routerLinkActive="router-link-active">
+              <i class="fas fa-user"></i>Login
+            </a>
+          </li>
+          <li *ngIf="!isLoggedIn && permitirRegistro" class="nav-item">
+            <a routerLink="/registrarse" class="nav-link" routerLinkActive="router-link-active">
+              <i class="fas fa-user"></i>Registro
+            </a>
+          </li>
+          <li *ngIf="isLoggedIn" class="nav-item">
+            <a style="cursor:pointer" (click)="logout()" class="nav-link">
+              Salir <i class="fa fa-sign-out"></i>
+            </a>
+          </li>
+          <li *ngIf="!isLoggedIn" class="nav-item">
+            <a style="cursor:pointer" (click)="logout()" class="nav-link">
+              Salir <i class="fa fa-sign-out"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
+  
 </header>
+
