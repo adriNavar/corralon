@@ -1,1 +1,215 @@
-<p>editar-producto works!</p>
+<header id="main-header" class="py-2 bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fas fa-user"></i> Editar Producto</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Formulario de producto -->
+<form #productoForm="ngForm" (ngSubmit)="guardar(productoForm)">
+  <flash-messages></flash-messages>
+
+  <!-- Botones -->
+  <section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col mb-4">
+          <a routerLink="/" class="btn btn-primary btn-block">
+            <i class="fa fa-arrow-left"></i> Regresar al Listado de Productos
+          </a>
+
+        </div>
+        <div class="col mb-4">
+          <button type="submit" class="btn btn-success btn-block">
+            <i class="fas fa-check"></i> Guardar Producto
+          </button>
+        </div>
+        <div class="col mb-4">
+          <a href="#" (click)="eliminar()" class="btn btn-danger btn-block">
+            <i class="fas fa-trash"></i> Eliminar Producto
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detalles del producto -->
+  <section id="details">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Editar Producto</h4>
+            </div>
+            <div class="card-body">
+              <!-- Campo Nombre -->
+              <div class="form-group py-3">
+                <label for="nombre">Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  class="form-control"
+                  #nombre="ngModel"
+                  [(ngModel)]="producto.nombre"
+                  [ngClass]="{ 'is-invalid': nombre.errors && nombre.touched }"
+                  required
+                  minlength="2"
+                />
+                <div
+                  [hidden]="!nombre.errors?.['required']"
+                  class="invalid-feedback"
+                >
+                  Nombre Requerido
+                </div>
+                <div
+                  [hidden]="!nombre.errors?.['minlength']"
+                  class="invalid-feedback"
+                >
+                  Debe contener al menos dos caracteres
+                </div>
+              </div>
+
+              <!-- Campo Marca -->
+              <div class="form-group py-3">
+                <label for="marca">Marca</label>
+                <input
+                  type="text"
+                  name="marca"
+                  class="form-control"
+                  #marca="ngModel"
+                  [(ngModel)]="producto.marca"
+                  [ngClass]="{ 'is-invalid': marca.errors && marca.touched }"
+                  required
+                  minlength="2"
+                />
+                <div
+                  [hidden]="!marca.errors?.['required']"
+                  class="invalid-feedback"
+                >
+                  Marca Requerida
+                </div>
+                <div
+                  [hidden]="!marca.errors?.['minlength']"
+                  class="invalid-feedback"
+                >
+                  Debe contener al menos dos caracteres
+                </div>
+              </div>
+
+              <!-- Campo Descripción -->
+              <div class="form-group py-3">
+                <label for="descripcion">Descripción</label>
+                <textarea
+                  name="descripcion"
+                  class="form-control"
+                  #descripcion="ngModel"
+                  [(ngModel)]="producto.descripcion"
+                  [ngClass]="{ 'is-invalid': descripcion.errors && descripcion.touched }"
+                  required
+                  minlength="2"
+                ></textarea>
+                <div
+                  [hidden]="!descripcion.errors?.['required']"
+                  class="invalid-feedback"
+                >
+                  Descripción Requerida
+                </div>
+                <div
+                  [hidden]="!descripcion.errors?.['minlength']"
+                  class="invalid-feedback"
+                >
+                  Debe contener al menos dos caracteres
+                </div>
+              </div>
+
+              <!-- Campo Stock -->
+              <div class="form-group py-3">
+                <label for="stock">Stock</label>
+                <input
+                  type="number"
+                  name="stock"
+                  class="form-control"
+                  #stock="ngModel"
+                  [(ngModel)]="producto.stock"
+                  [ngClass]="{ 'is-invalid': stock.errors && stock.touched }"
+                  required
+                />
+                <div
+                  [hidden]="!stock.errors?.['required']"
+                  class="invalid-feedback"
+                >
+                  Stock Requerido
+                </div>
+              </div>
+
+              <!-- Campo Precio -->
+              <div class="form-group py-3">
+                <label for="precio">Precio</label>
+                <input
+                  type="number"
+                  name="precio"
+                  class="form-control"
+                  #precio="ngModel"
+                  [(ngModel)]="producto.precio"
+                  [ngClass]="{ 'is-invalid': precio.errors && precio.touched }"
+                  required
+                />
+                <div
+                  [hidden]="!precio.errors?.['required']"
+                  class="invalid-feedback"
+                >
+                  Precio Requerido
+                </div>
+              </div>
+
+              <!-- Campo Categoría -->
+              <div class="form-group py-3">
+                <label for="categoria">Categoría</label>
+                <input
+                  type="number"
+                  name="categoria"
+                  class="form-control"
+                  #categoria="ngModel"
+                  [(ngModel)]="producto.categoria"
+                  [ngClass]="{ 'is-invalid': categoria.errors && categoria.touched }"
+                  required
+                />
+                <div
+                  [hidden]="!categoria.errors?.['required']"
+                  class="invalid-feedback"
+                >
+                  Categoría Requerida
+                </div>
+              </div>
+
+              <!-- Campo URL de la Imagen -->
+              <div class="form-group py-3">
+                <label for="imagen">URL de la Imagen</label>
+                <input
+                  type="text"
+                  name="imagen"
+                  class="form-control"
+                  #imagen="ngModel"
+                  [(ngModel)]="producto.imagen"
+                  [ngClass]="{ 'is-invalid': imagen.errors && imagen.touched }"
+                  required
+                />
+                <div
+                  [hidden]="!imagen.errors?.['required']"
+                  class="invalid-feedback"
+                >
+                  URL de la Imagen Requerida
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
