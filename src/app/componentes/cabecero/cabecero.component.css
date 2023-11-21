@@ -3,6 +3,7 @@ header {
     height: 15vh;
     box-shadow: 0px 2px 3px rgba(0, 29, 54, 0.2);
     padding: 0.5rem 1rem;
+    color: #003870;
 }
 
 .img-svg {
@@ -18,10 +19,22 @@ header {
     color: #003870;
 }
 
+.nav-link {
+    color: #003870;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    opacity: 0.5;
+}
+
 /* Consulta de medios para pantallas más pequeñas, por ejemplo, móviles */
 @media only screen and (max-width: 767px) {
     .title {
         display: none; /* Oculta el título en pantallas más pequeñas */
+    }
+    nav {
+      display: none;
     }
 }
 
@@ -30,4 +43,5 @@ header {
     .title {
         font-size: 1rem; /* Ajusta el tamaño del texto para tablets */
     }
+
 }
