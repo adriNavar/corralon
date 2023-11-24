@@ -34,6 +34,8 @@ import { LoaderComponent } from './componentes/loader/loader.component';
 import { CategoriasComponent } from './componentes/categorias/categorias.component';
 import { EditarCategoriaComponent } from './componentes/editar-categoria/editar-categoria.component';
 import { CategoriaServicio } from './servicios/categoria.service';
+import { AppSidebarComponent } from './componentes/app-sidebar/app-sidebar.component';
+import { SidebarService } from './servicios/sidebar.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { CategoriaServicio } from './servicios/categoria.service';
     EditarProductoComponent,
     LoaderComponent,
     CategoriasComponent,
-    EditarCategoriaComponent
+    EditarCategoriaComponent,
+    AppSidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +73,7 @@ import { CategoriaServicio } from './servicios/categoria.service';
     ConfiguracionServicio,
     ConfiguracionGuard,
     CategoriaServicio,
+    SidebarService,
     {provide:SETTINGS,useValue:{}}],
   bootstrap: [AppComponent]
 })
