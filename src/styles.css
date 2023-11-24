@@ -12,6 +12,7 @@ body {
     vertical-align: baseline;
     box-sizing: border-box;
     border-top: 10px solid #003870;
+    min-height: 100vh;
 }
 
 .contenido {
@@ -20,6 +21,7 @@ body {
     background-image: url('./assets/background4-corralon.jpeg');
     background-size: cover;
     background-position: center;
+    height: 60vh;
 }
 
 /* Consulta de medios para pantallas más pequeñas, por ejemplo, móviles */
@@ -29,6 +31,13 @@ body {
     height: auto; /* Ajusta la altura según el contenido */
     background-size: auto; /* Ajusta el tamaño de fondo */
     height: 80vh;
+  }
+}
+
+/* Media query para pantallas grandes */
+@media only screen and (min-width: 768px) {
+  .contenido {
+    min-height: 60vh; /* Establece la altura al 100% de la ventana en pantallas grandes */
   }
 }
 
