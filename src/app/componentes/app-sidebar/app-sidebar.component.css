@@ -8,7 +8,7 @@
   background-color: #003870;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
+  padding-top: 1.5rem;
   color: #c1dcf8;
   white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
