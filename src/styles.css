@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,300&display=swap');
+
+/* Estilos adicionales globales */
+body {
+    font-family: 'Lato-sans', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 17px;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+    border-top: 10px solid #003870;
+    min-height: 100vh;
+}
+
+.contenido {
+    padding: 1rem 2rem;
+    height: auto;
+    background-image: url('./assets/background4-corralon.jpeg');
+    background-size: cover;
+    background-position: center;
+    min-height: 75vh;
+}
+
+/* Consulta de medios para pantallas más pequeñas, por ejemplo, móviles */
+@media only screen and (max-width: 767px) {
+  .contenido {
+    padding: 1rem; /* Ajusta el padding para tamaños más pequeños */
+    height: auto; /* Ajusta la altura según el contenido */
+    background-size: auto; /* Ajusta el tamaño de fondo */
+    height: 80vh;
+  }
+}
+
+/* Media query para pantallas grandes */
+@media only screen and (min-width: 768px) {
+  .contenido {
+    min-height: 60vh; /* Establece la altura al 100% de la ventana en pantallas grandes */
+  }
+}
+
+

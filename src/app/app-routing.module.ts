@@ -10,15 +10,18 @@ import { AuthGuard } from './guardianes/auth.guard';
 import { ConfiguracionGuard } from './guardianes/configuracion.guard';
 import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
 import { CategoriasComponent } from './componentes/categorias/categorias.component';
+import { EditarCategoriaComponent } from './componentes/editar-categoria/editar-categoria.component';
+
 
 const routes: Routes = [
-  { path: '', component: TableroComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
-  { path: 'registrarse', component: RegistroComponent, canActivate: [ConfiguracionGuard] },
-  { path: 'configuracion', component: ConfiguracionComponent, canActivate: [AuthGuard] },
-  { path: 'categorias', component: CategoriasComponent, canActivate: [AuthGuard] }, // Ruta de categorías primero
-  { path: 'producto/editar/:id', component: EditarProductoComponent, canActivate: [AuthGuard] },
-  { path: '**', component: NoEncontradoComponent },
+  {path:'',component: TableroComponent,canActivate: [AuthGuard]},
+  {path:'login',component: LoginComponent},
+  {path:'registrarse',component: RegistroComponent,canActivate: [ConfiguracionGuard]},
+  {path:'configuracion',component: ConfiguracionComponent,canActivate: [AuthGuard]},
+  {path:'producto/editar/:id',component: EditarProductoComponent,canActivate: [AuthGuard]},
+  {path:'categorias/editar/:id',component: EditarCategoriaComponent,canActivate: [AuthGuard]},
+  { path: 'categorias', component: CategoriasComponent, canActivate: [AuthGuard] },// Agrega esta línea para la gestión de categorías
+  {path:'**',component: NoEncontradoComponent},
 ];
 
 

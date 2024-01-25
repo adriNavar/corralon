@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Producto } from 'src/app/modelos/producto.model';
 import { ProductoServicio } from './../../servicios/producto.service';
+import { SidebarService } from '../../servicios/sidebar.service';
 
 @Component({
   selector: 'app-productos',
@@ -10,6 +11,8 @@ import { ProductoServicio } from './../../servicios/producto.service';
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent implements OnInit {
+
+  isSidebarOpen: boolean = false;
 
   productos: Producto[];
   producto: Producto = {
@@ -22,7 +25,8 @@ export class ProductosComponent implements OnInit {
   @ViewChild("botonLimpiar") botonLimpiar: ElementRef;
 
   constructor(private productoServicio: ProductoServicio,
-              private flashMessage: FlashMessagesService) { }
+              private flashMessage: FlashMessagesService,
+              private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
     this.productoServicio.getProductos().subscribe(
@@ -55,5 +59,10 @@ export class ProductosComponent implements OnInit {
   resetForm() {
     this.productoForm.resetForm();
     this.cerrarModal();
+  }
+
+  toggleSidebar() {
+    console.log('OPEN')
+    this.sidebarService.toggleSidebar();
   }
 }

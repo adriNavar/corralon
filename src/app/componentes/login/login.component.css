@@ -1,0 +1,35 @@
+.card-header {
+    background-color: #003870;
+    color: #ffff;
+    text-align: center;
+}
+
+.card-header h4 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+#login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0.5rem;
+}
+
+h4 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.btn-login {
+    width: 100%;
+}
+
+  
+/* Consulta de medios para tabletas */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    #login {
+        margin: 1rem;
+        width: 100%; 
+    }
+}

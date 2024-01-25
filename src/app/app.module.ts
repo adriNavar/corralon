@@ -11,6 +11,8 @@ import { AngularFireAuthModule, SETTINGS } from '@angular/fire/compat/auth';
 import { FlashMessage } from 'angular2-flash-messages/module/flash-message';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,7 +29,8 @@ import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.componen
 import { ProductosComponent } from './componentes/productos/productos.component';
 import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
 import { ProductoServicio } from './servicios/producto.service';
-import { CategoriaServicio } from './servicios/categoria.service';
+import { LoaderService } from './servicios/loader.service';
+import { LoaderComponent } from './componentes/loader/loader.component';
 import { CategoriasComponent } from './componentes/categorias/categorias.component';
 import { EditarCategoriaComponent } from './componentes/editar-categoria/editar-categoria.component';
 import { VentasComponent } from './componentes/ventas/ventas.component';
@@ -43,6 +46,9 @@ import { VentasComponent } from './componentes/ventas/ventas.component';
     ConfiguracionComponent,
     NoEncontradoComponent,
     PiePaginaComponent,
+    ProductosComponent,
+    EditarProductoComponent,
+    LoaderComponent,
     CategoriasComponent,
     EditarCategoriaComponent,
     VentasComponent,
@@ -55,14 +61,16 @@ import { VentasComponent } from './componentes/ventas/ventas.component';
     AngularFireAuthModule,
     FormsModule,
     FlashMessagesModule.forRoot(),
-
+    BrowserAnimationsModule,
   ],
   providers: [ProductoServicio,
+    LoaderService,
     LoginService,
     AuthGuard,
     ConfiguracionServicio,
     ConfiguracionGuard,
     CategoriaServicio,
+    SidebarService,
     {provide:SETTINGS,useValue:{}}],
   bootstrap: [AppComponent]
 })
