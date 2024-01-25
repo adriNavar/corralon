@@ -30,6 +30,7 @@ import { ProductoServicio } from './servicios/producto.service';
 import { CategoriaServicio } from './servicios/categoria.service';
 import { CategoriasComponent } from './componentes/categorias/categorias.component';
 import { EditarCategoriaComponent } from './componentes/editar-categoria/editar-categoria.component';
+import { VentasComponent } from './componentes/ventas/ventas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { EditarCategoriaComponent } from './componentes/editar-categoria/editar-
     PiePaginaComponent,
     CategoriasComponent,
     EditarCategoriaComponent,
+    VentasComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { Categoria } from 'src/app/modelos/categoria.model'; // Asegúrate de importar el modelo de categoría
+import { Categoria } from 'src/app/modelos/categoria.model';
 import { CategoriaServicio } from 'src/app/servicios/categoria.service';
 
 @Component({
@@ -12,16 +12,18 @@ import { CategoriaServicio } from 'src/app/servicios/categoria.service';
 export class EditarCategoriaComponent implements OnInit {
 
   categoria: Categoria;
-  id: number;
+  id: string;
 
-  constructor(private categoriaServicio: CategoriaServicio,
+  constructor(
+    private categoriaServicio: CategoriaServicio,
     private flashMessage: FlashMessagesService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-    this.categoriaServicio.getCategoria(this.id.toString()).subscribe(categoria => {
+    this.categoriaServicio.getCategoria(this.id).subscribe(categoria => {
       this.categoria = categoria;
     });
   }
@@ -34,15 +36,20 @@ export class EditarCategoriaComponent implements OnInit {
       });
     } else {
       value.id_categoria = this.id;
-      this.categoriaServicio.modificarCategoria(value);
-      this.router.navigate(['/categorias']); // Cambia la ruta a donde quieras redirigir después de guardar.
+      this.categoriaServicio.modificarCategoria(value)
+        .then(() => {
+          this.router.navigate(['/']);  // Redirige a la página principal después de editar
+        })
+        .catch(error => {
+          console.error('Error al modificar la categoría:', error);
+        });
     }
   }
 
   eliminar() {
     if (confirm('¿Está seguro que desea eliminar la categoría?')) {
       this.categoriaServicio.eliminarCategoria(this.categoria);
-      this.router.navigate(['/categorias']); // Cambia la ruta a donde quieras redirigir después de eliminar.
+      this.router.navigate(['/categorias']);
     }
   }
 }

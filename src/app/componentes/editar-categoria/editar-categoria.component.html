@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <h1><i class="fas fa-user"></i> Editar Categoría</h1>
+        <h1><i class="fas fa-list-alt"></i> Editar Categoría</h1>
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
     <div class="container">
       <div class="row text-center">
         <div class="col mb-4">
-          <a routerLink="/" class="btn btn-primary btn-block">
+          <a routerLink="/categorias" class="btn btn-primary btn-block">
             <i class="fa fa-arrow-left"></i> Regresar al Listado de Categorías
           </a>
         </div>
@@ -45,6 +45,18 @@
               <h4>Editar Categoría</h4>
             </div>
             <div class="card-body">
+              <!-- Campo ID Categoría -->
+              <div class="form-group py-3">
+                <label for="id_categoria">ID Categoría</label>
+                <input
+                  type="text"
+                  name="id_categoria"
+                  class="form-control"
+                  [(ngModel)]="categoria.id_categoria"
+                  disabled
+                />
+              </div>
+
               <!-- Campo Nombre -->
               <div class="form-group py-3">
                 <label for="nombre">Nombre</label>

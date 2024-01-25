@@ -19,7 +19,7 @@ export class CategoriaServicio {
       map(cambios => {
         return cambios.map(accion => {
           const datos = accion.payload.doc.data() as Categoria;
-          datos.id_categoria = Number(accion.payload.doc.id);
+          datos.id_categoria = accion.payload.doc.id; // No es necesario convertirlo a Number
           return datos;
         });
       })
@@ -30,7 +30,6 @@ export class CategoriaServicio {
   agregarCategoria(categoria: Categoria) {
     this.categoriasColeccion.add(categoria);
   }
-
   getCategoria(id_categoria: string) {
     this.categoriaDoc = this.db.doc<Categoria>(`categorias/${id_categoria}`);
     this.categoria = this.categoriaDoc.snapshotChanges().pipe(
@@ -39,20 +38,27 @@ export class CategoriaServicio {
           return null;
         } else {
           const datos = accion.payload.data() as Categoria;
-          datos.id_categoria = Number(accion.payload.id);
-
+          datos.id_categoria = accion.payload.id; // No es necesario convertirlo a Number
           return datos;
         }
       })
-    ); // Agrega un paréntesis de cierre aquí
+    );
     return this.categoria;
   }
 
-
-  modificarCategoria(categoria: Categoria) {
+  modificarCategoria(categoria: Categoria): Promise<void> {
     this.categoriaDoc = this.db.doc<Categoria>(`categorias/${categoria.id_categoria}`);
-    this.categoriaDoc.update(categoria);
+    return new Promise<void>((resolve, reject) => {
+      this.categoriaDoc.update(categoria)
+        .then(() => {
+          resolve(); // La operación de actualización se completó con éxito
+        })
+        .catch((error) => {
+          reject(error); // Hubo un error durante la actualización
+        });
+    });
   }
+
 
   eliminarCategoria(categoria: Categoria) {
     this.categoriaDoc = this.db.doc<Categoria>(`categorias/${categoria.id_categoria}`);

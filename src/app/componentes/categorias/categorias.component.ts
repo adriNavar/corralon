@@ -1,20 +1,18 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { Categoria } from 'src/app/modelos/categoria.model'; // Importa la clase Categoria
+import { Categoria } from 'src/app/modelos/categoria.model';
 import { CategoriaServicio } from './../../servicios/categoria.service';
 
 @Component({
-  selector: 'app-categorias',  // Asegúrate de que sea 'app-categorias' o el selector correcto
+  selector: 'app-categorias',
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.css']
 })
-
 export class CategoriasComponent implements OnInit {
 
-  categorias: Categoria[]; // Cambia el tipo de dato de productos a Categoria
+  categorias: Categoria[];
   categoria: Categoria = {
-    // No asignes un valor a id_categoria, Angular lo inicializará a undefined
     nombre: '',
   };
 
@@ -22,7 +20,7 @@ export class CategoriasComponent implements OnInit {
   @ViewChild("botonCerrar") botonCerrar: ElementRef;
   @ViewChild("botonLimpiar") botonLimpiar: ElementRef;
 
-  constructor(private categoriaServicio: CategoriaServicio, // Cambia el servicio a CategoriaServicio
+  constructor(private categoriaServicio: CategoriaServicio,
               private flashMessage: FlashMessagesService) { }
 
   ngOnInit(): void {
@@ -32,7 +30,7 @@ export class CategoriasComponent implements OnInit {
       });
   }
 
-  agregar({ value, valid }: { value: Categoria, valid: boolean }) {
+  agregarCategoria({ value, valid }: { value: Categoria, valid: boolean }) {
     if (!valid) {
       this.flashMessage.show('Por favor completar el formulario correctamente', {
         cssClass: 'alert-danger',

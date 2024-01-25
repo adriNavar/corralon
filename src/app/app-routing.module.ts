@@ -12,14 +12,15 @@ import { EditarProductoComponent } from './componentes/editar-producto/editar-pr
 import { CategoriasComponent } from './componentes/categorias/categorias.component';
 
 const routes: Routes = [
-  {path:'',component: TableroComponent,canActivate: [AuthGuard]},
-  {path:'login',component: LoginComponent},
-  {path:'registrarse',component: RegistroComponent,canActivate: [ConfiguracionGuard]},
-  {path:'configuracion',component: ConfiguracionComponent,canActivate: [AuthGuard]},
-  {path:'producto/editar/:id',component: EditarProductoComponent,canActivate: [AuthGuard]},
-  { path: 'categorias', component: CategoriasComponent, canActivate: [AuthGuard] },// Agrega esta línea para la gestión de categorías
-  {path:'**',component: NoEncontradoComponent},
+  { path: '', component: TableroComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'registrarse', component: RegistroComponent, canActivate: [ConfiguracionGuard] },
+  { path: 'configuracion', component: ConfiguracionComponent, canActivate: [AuthGuard] },
+  { path: 'categorias', component: CategoriasComponent, canActivate: [AuthGuard] }, // Ruta de categorías primero
+  { path: 'producto/editar/:id', component: EditarProductoComponent, canActivate: [AuthGuard] },
+  { path: '**', component: NoEncontradoComponent },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
