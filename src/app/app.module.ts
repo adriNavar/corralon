@@ -34,6 +34,8 @@ import { LoaderComponent } from './componentes/loader/loader.component';
 import { CategoriasComponent } from './componentes/categorias/categorias.component';
 import { EditarCategoriaComponent } from './componentes/editar-categoria/editar-categoria.component';
 import { VentasComponent } from './componentes/ventas/ventas.component';
+import { CategoriaServicio } from './servicios/categoria.service';
+import { SidebarService } from './servicios/sidebar.service';
 @NgModule({
   declarations: [
     AppComponent,
