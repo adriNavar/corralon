@@ -1,0 +1,113 @@
+<section id="actions" class="py-4 mb-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <a href="#" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#agregarCategoriaModal">
+          <i class="fas fa-plus"></i> Agregar
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Listado Categorías -->
+<section id="categorias">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header">
+            <h4>Listado Categorías</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>ID Categoría</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let categoria of categorias; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ categoria.nombre }}</td>
+                <td>{{ categoria.id_categoria }}</td>
+                <td>
+                  <a routerLink="/categoria/editar/{{ categoria.id_categoria }}" class="btn btn-secondary">
+                    <i class="fas fa-angle-double-right"></i> Editar
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Tarjetas laterales -->
+      <div class="col-md-3">
+        <!-- Tarjeta de total de categorías -->
+        <div class="card text-center bg-success text-white mb-3">
+          <div class="card-body">
+            <h3>Total Categorías</h3>
+            <h4 class="display-4"><i class="fas fa-sitemap"></i> {{ categorias?.length }}</h4>
+          </div>
+        </div>
+        <!-- Fin de tarjeta de total de categorías -->
+      </div>
+      <!-- Fin de tarjetas laterales -->
+    </div>
+  </div>
+</section>
+
+<!-- Agregar categoría modal -->
+<div class="modal fade" id="agregarCategoriaModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title">Agregar Categoría</h5>
+        <button class="close" data-bs-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+
+      <!-- Flash Messages -->
+      <flash-messages></flash-messages>
+
+      <!-- Formulario de categoría -->
+      <form #categoriaForm="ngForm" (ngSubmit)="agregar(categoriaForm)">
+        <div class="modal-body">
+          <!-- Campo Nombre -->
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" class="form-control" #nombre="ngModel" [(ngModel)]="categoria.nombre"
+              [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required minlength="2">
+            <div [hidden]="!nombre.errors?.['required']" class="invalid-feedback">
+              Nombre Requerido
+            </div>
+            <div [hidden]="!nombre.errors?.['minlength']" class="invalid-feedback">
+              Debe contener al menos dos caracteres
+            </div>
+          </div>
+
+          <!-- Campo ID Categoría -->
+          <div class="form-group">
+            <label for="id_categoria">ID Categoría</label>
+            <input type="number" name="id_categoria" class="form-control" #id_categoria="ngModel"
+              [(ngModel)]="categoria.id_categoria" [ngClass]="{'is-invalid': id_categoria.errors && id_categoria.touched}"
+              required>
+            <div [hidden]="!id_categoria.errors?.['required']" class="invalid-feedback">
+              ID Categoría Requerido
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón Guardar -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+      <!-- Fin del formulario de categoría -->
+
+    </div>
+  </div>
+</div>
