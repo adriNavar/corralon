@@ -35,6 +35,11 @@ export class ProductosComponent implements OnInit {
       });
   }
 
+  onInput(event: any): void {
+    const query = (event.target as HTMLInputElement).value;
+    this.buscarProductos(query);
+  }
+
   agregar({ value, valid }: { value: Producto, valid: boolean }) {
     if (!valid) {
       this.flashMessage.show('Por favor completar el formulario correctamente', {
@@ -64,5 +69,12 @@ export class ProductosComponent implements OnInit {
   toggleSidebar() {
     console.log('OPEN')
     this.sidebarService.toggleSidebar();
+  }
+
+  buscarProductos(query: string): void {
+    this.productoServicio.search(query).subscribe(productos => {
+      this.productos = productos;
+      console.log(this.productos)
+    });
   }
 }

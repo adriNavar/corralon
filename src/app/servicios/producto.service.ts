@@ -28,6 +28,27 @@ export class ProductoServicio {
     return this.productos;
   }
 
+  search(query: string): Observable<Producto[]> {
+    // Realizar la consulta para obtener todos los productos
+    return this.db.collection('productos').snapshotChanges().pipe(
+      map(cambios => {
+        // Mapear los datos y asignar los IDs
+        return cambios.map(accion => {
+          const datos = accion.payload.doc.data() as Producto;
+          datos.id = accion.payload.doc.id;
+          return datos;
+        });
+      }),
+      map(productos => {
+        // Filtrar los productos que coinciden con el término de búsqueda, sin distinguir entre mayúsculas y minúsculas
+        return productos.filter(producto =>
+          producto.nombre.toLowerCase().includes(query.toLowerCase())
+        );
+      })
+    );
+}
+
+
   agregarProducto(producto: Producto) {
     this.productosColeccion.add(producto);
   }

@@ -2,7 +2,7 @@
 <section id="productos">
   <div class="container">
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-12">
         <div class="card">
           <div class="card-header">
             <div style="display: flex; flex-direction: row; gap: 1rem;">
@@ -16,6 +16,15 @@
                 >
                   <i class="fas fa-shopping-cart"></i><b> VENTAS ->></b>
                 </button>
+                <div class="form-group">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Buscar papos: " 
+                    id="buscar-papos"
+                    (input)="onInput($event)"
+                  > 
+                </div>
             </div>
           </div>
           <table class="table table-striped">
@@ -53,16 +62,7 @@
         </div>
       </div>
       <!-- Tarjetas laterales -->
-      <div class="col-md-3">
-        <!-- Tarjeta de total de productos -->
-        <div class="card text-center bg-success text-white mb-3">
-          <div class="card-body">
-            <h3>Total Productos</h3>
-            <h4 class="display-4"><i class="fas fa-box"></i> {{ productos?.length }}</h4>
-          </div>
-        </div>
-        <!-- Fin de tarjeta de total de productos -->
-      </div>
+      
       <!-- Fin de tarjetas laterales -->
     </div>
   </div>
