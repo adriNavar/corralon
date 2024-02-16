@@ -6,31 +6,31 @@
         <div class="card">
           <div class="card-header">
             <div style="display: flex; flex-direction: row; gap: 1rem;">
-                <h4>Listado Productos</h4> 
+                <h4>Listado Productos</h4>
                 <a href="#" class="btn btn-sm btn-primary d-inline p-2" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
                     <i class="fas fa-plus"></i> NUEVO PRODUCTO
                 </a>
-                <button 
+                <button
                   class="btn btn-sm btn-success d-inline p-2"
                   (click)="toggleSidebar()"
                 >
                   <i class="fas fa-shopping-cart"></i><b> VENTAS ->></b>
                 </button>
                 <div class="form-group">
-                  <input 
-                    type="text" 
-                    class="form-control" 
-                    placeholder="Buscar papos: " 
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Buscar papos: "
                     id="buscar-papos"
                     (input)="onInput($event)"
-                  > 
+                  >
                 </div>
             </div>
           </div>
           <table class="table table-striped">
             <thead class="table-dark">
               <tr>
-                <th>#</th>
+                <th>Numero</th>
                 <th>Nombre</th>
                 <th>Marca</th>
                 <th>Descripción</th>
@@ -38,6 +38,8 @@
                 <th>Precio</th>
                 <th>Categoría</th>
                 <th>Imagen</th>
+                <th></th>
+                <th></th>
                 <th></th>
               </tr>
             </thead>
@@ -52,17 +54,23 @@
                 <td>{{ producto.categoria }}</td>
                 <td><img [src]="producto.imagen" alt="Imagen del Producto" style="width: 50px; height: 50px;"></td>
                 <td>
+                  <a routerLink="" class="btn btn-success btn-sm">
+                    <i class="fas fa-angle-double-right"></i><b>Vender</b>
+                  </a>
+                </td>
+                <td>
                   <a routerLink="/producto/editar/{{ producto.id }}" class="btn btn-warning btn-sm">
                     <i class="fas fa-angle-double-right"></i><b>Editar</b>
                   </a>
                 </td>
+
               </tr>
             </tbody>
           </table>
         </div>
       </div>
       <!-- Tarjetas laterales -->
-      
+
       <!-- Fin de tarjetas laterales -->
     </div>
   </div>
@@ -179,4 +187,4 @@
   </div>
 </div>
 
-<app-sidebar></app-sidebar>
+<app-sidebar> </app-sidebar>
