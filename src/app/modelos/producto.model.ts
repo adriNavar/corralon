@@ -9,5 +9,5 @@ export interface Producto {
   stock?: number;
   precio?: number;
   categoria?: number;
-  imagen?: string;
+  imagen?: string | File;
 }
