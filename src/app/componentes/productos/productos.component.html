@@ -51,10 +51,29 @@
                 <td>{{ producto.stock }}</td>
                 <td>{{ producto.precio | currency: "ARG":"$" }}</td>
                 <td>{{ producto.categoria}}</td>
-                <td>{{ producto.imagen}} </td>
-                <td> <a routerLink="/producto/editar/{{ producto.id }}" class="btn btn-warning btn-sm">
-                    <i class="fas fa-angle-double-right"></i><b>Editar</b>
-                  </a>
+                <td>
+                  <ng-container *ngIf="producto.imagen">
+                    <div class="mt-2">
+                      <img 
+                        [src]=producto.imagen
+                        alt="Vista Previa de la Imagen" 
+                        class="img-thumbnail" 
+                        style="max-width: 150px; max-height: 150px;">
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="!producto.imagen">sin imagen</ng-container>
+                </td>
+                <td>
+                  <button 
+                    routerLink="/producto/editar/{{ producto.id }}" 
+                    class="btn btn-warning btn-sm" 
+                    style="background-color: orange;" 
+                    data-bs-toggle="tooltip" 
+                    data-bs-placement="top" 
+                    title="Editar"
+                  >
+                    <i class="fas fa-edit" style="color: white;"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -74,7 +93,13 @@
     <div class="modal-content">
       <div class="modal-header bg-custom text-white">
         <h5 class="modal-title">Agregar Producto</h5>
-        <button class="close" data-bs-dismiss="modal">
+        <button 
+          class="close" 
+          data-bs-dismiss="modal" 
+          class="btn btn-info" 
+          #botonCerrar 
+          #botonLimpiar
+        >
           <span>&times;</span>
         </button>
       </div>
@@ -99,7 +124,9 @@
                   [ngClass]="{'is-invalid':nombre.errors && nombre.touched}" 
                   required 
                   minlength="2"
+                  tabindex="1" 
                 >
+                <!-- Validación -->
                 <div [hidden]="!nombre.errors?.['required']" class="invalid-feedback">
                   Nombre Requerido
                 </div>
@@ -107,7 +134,7 @@
                   Debe contener al menos dos caracteres
                 </div>
               </div>
-
+      
               <!-- Campo Marca -->
               <div class="form-group">
                 <label for="marca">Marca</label>
@@ -120,7 +147,9 @@
                   [ngClass]="{'is-invalid':marca.errors && marca.touched}" 
                   required 
                   minlength="2"
+                  tabindex="3" 
                 >
+                <!-- Validación -->
                 <div [hidden]="!marca.errors?.['required']" class="invalid-feedback">
                   Marca Requerida
                 </div>
@@ -128,33 +157,26 @@
                   Debe contener al menos dos caracteres
                 </div>
               </div>
-
+      
               <!-- Campo Precio -->
               <div class="form-group">
                 <label for="precio">Precio</label>
-                <input type="number" name="precio" class="form-control" #precio="ngModel" [(ngModel)]="producto.precio"
-                  [ngClass]="{'is-invalid':precio.errors && precio.touched}" required>
+                <input 
+                  type="number" 
+                  name="precio" 
+                  class="form-control" 
+                  #precio="ngModel" 
+                  [(ngModel)]="producto.precio"
+                  [ngClass]="{'is-invalid':precio.errors && precio.touched}" 
+                  required
+                  tabindex="5"
+                >
+                <!-- Validación -->
                 <div [hidden]="!precio.errors?.['required']" class="invalid-feedback">
                   Precio Requerido
                 </div>
               </div>
-            </div>
-
-            <div class="col-md-6">
-              <!-- Campo Descripción -->
-              <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <textarea name="descripcion" class="form-control" #descripcion="ngModel"
-                  [(ngModel)]="producto.descripcion" [ngClass]="{'is-invalid':descripcion.errors && descripcion.touched}"
-                  required minlength="2"></textarea>
-                <div [hidden]="!descripcion.errors?.['required']" class="invalid-feedback">
-                  Descripción Requerida
-                </div>
-                <div [hidden]="!descripcion.errors?.['minlength']" class="invalid-feedback">
-                  Debe contener al menos dos caracteres
-                </div>
-              </div>
-
+      
               <!-- Campo Stock -->
               <div class="form-group">
                 <label for="stock">Stock</label>
@@ -166,12 +188,57 @@
                   [(ngModel)]="producto.stock"
                   [ngClass]="{'is-invalid':stock.errors && stock.touched}" 
                   required
+                  tabindex="7" 
                 >
+                <!-- Validación -->
                 <div [hidden]="!stock.errors?.['required']" class="invalid-feedback">
                   Stock Requerido
                 </div>
               </div>
-
+            </div>
+      
+            <div class="col-md-6">
+              <!-- Campo Descripción -->
+              <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea 
+                  name="descripcion" 
+                  class="form-control" 
+                  #descripcion="ngModel"
+                  [(ngModel)]="producto.descripcion" 
+                  [ngClass]="{'is-invalid':descripcion.errors && descripcion.touched}"
+                  required 
+                  minlength="2"
+                  tabindex="2" 
+                ></textarea>
+                <!-- Validación -->
+                <div [hidden]="!descripcion.errors?.['required']" class="invalid-feedback">
+                  Descripción Requerida
+                </div>
+                <div [hidden]="!descripcion.errors?.['minlength']" class="invalid-feedback">
+                  Debe contener al menos dos caracteres
+                </div>
+              </div>
+      
+              <!-- Campo Categoría -->
+              <div class="form-group">
+                <label for="categoria">Categoría</label>
+                <input 
+                  type="number" 
+                  name="categoria" 
+                  class="form-control" 
+                  #categoria="ngModel"
+                  [(ngModel)]="producto.categoria" 
+                  [ngClass]="{'is-invalid':categoria.errors && categoria.touched}"
+                  required
+                  tabindex="4" 
+                >
+                <!-- Validación -->
+                <div [hidden]="!categoria.errors?.['required']" class="invalid-feedback">
+                  Categoría Requerida
+                </div>
+              </div>
+      
               <!-- Campo para cargar la imagen -->
               <div class="form-group">
                 <label for="imagen">Imagen</label>
@@ -181,6 +248,7 @@
                   class="form-control-file"
                   (change)="onFileSelected($event)" 
                   accept="image/*"
+                  tabindex="6" 
                 >
                 <div *ngIf="producto.imagen" class="mt-2">
                   <img 
@@ -190,36 +258,16 @@
                     style="max-width: 150px; max-height: 150px;">
                 </div>
               </div>
-              <!-- 
-                <div class="form-group" hidden>
-                <label for="imagen"></label>
-                <input 
-                    type="text" 
-                    name="imagen" 
-                    class="form-control" 
-                    #imagen="ngModel" 
-                    [(ngModel)]="producto.imagen"
-                    [ngClass]="{'is-invalid': imagen.errors && imagen.touched}" 
-                    readonly
-                    required>
-                <div [hidden]="!imagen.errors?.['required']" class="invalid-feedback">
-                    URL de la Imagen Requerida
-                </div>
-            </div> -->
-            
-            
-              
-            
-              
             </div>
           </div>
         </div>
-
+      
         <!-- Botón Guardar -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
         </div>
       </form>
+      
       <!-- Fin del formulario de producto -->
 
     </div>

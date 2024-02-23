@@ -5,8 +5,7 @@ import { Producto } from 'src/app/modelos/producto.model';
 import { ProductoServicio } from './../../servicios/producto.service';
 import { Categoria, CategoriaServicio } from './../../servicios/categoria.service';
 import { SidebarService } from '../../servicios/sidebar.service';
-import { AngularFireStorage } from '@angular/fire/compat/storage'; // Importar AngularFireStorage
- // Importar AngularFireStorage
+import { AngularFireStorage } from '@angular/fire/compat/storage'; 
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -15,7 +14,6 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./productos.component.css']
 })
 export class ProductosComponent implements OnInit {
-
   isSidebarOpen: boolean = false;
   productos: Producto[];
   categorias: Categoria[];
@@ -26,22 +24,16 @@ export class ProductosComponent implements OnInit {
   @ViewChild("botonCerrar") botonCerrar: ElementRef;
   @ViewChild("botonLimpiar") botonLimpiar: ElementRef;
   imagenPreview: string | ArrayBuffer;
+
   constructor(private productoServicio: ProductoServicio,
               private categoriaServicio: CategoriaServicio,
               private flashMessage: FlashMessagesService,
               private sidebarService: SidebarService,
-              private storage: AngularFireStorage) { } // Inyectar AngularFireStorage
+              private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
-    this.productoServicio.getProductos().subscribe(
-      productos => {
-        this.productos = productos;
-      });
-
-      this.categoriaServicio.getCategorias().subscribe(
-        categorias => {
-          this.categorias = categorias;
-        });
+    this.productoServicio.getProductos().subscribe(productos => this.productos = productos);
+    this.categoriaServicio.getCategorias().subscribe(categorias => this.categorias = categorias);
   }
 
   onInput(event: any): void {
@@ -51,48 +43,36 @@ export class ProductosComponent implements OnInit {
   }
 
   agregar({ value, valid }: { value: Producto, valid: boolean }) {
-    console.log(value);
     if (!valid) {
       this.flashMessage.show('Por favor completar el formulario correctamente', {
         cssClass: 'alert-danger',
         timeout: 4000
       });
-    } else {
-      const file = this.producto.imagen;
-      value.imagen = file;
+      return;
+    }
 
-      console.log(typeof file);
-      console.log(value);
+    console.log(value)
+
+    const file = this.producto.imagen;
+    if (file instanceof File) {
+      const filePath = `images/${Date.now()}_${file.name}`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, file);
       
-      // Verificar si 'file' es de tipo File
-      if (file instanceof File) {
-        const filePath = `images/${Date.now()}_${file.name}`;
-        const fileRef = this.storage.ref(filePath);
-        const task = this.storage.upload(filePath, file);
-        
-        // Observar cambios en el proceso de carga de la imagen
-        task.snapshotChanges().pipe(
-            finalize(() => {
-                // Obtener la URL de descarga de la imagen
-                fileRef.getDownloadURL().subscribe(url => {
-                    // Asignar la URL de la imagen al producto
-                    value.imagen = url;
-                    // Llamar a la función para guardar el producto en la base de datos
-                    this.guardarProducto(value);
-                });
-            })
-        ).subscribe();
-      } else {
-          // Si 'producto.imagen' es un string (nombre de archivo), asignarlo directamente a 'value.imagen'
-          value.imagen = this.producto.imagen;
-          // Llamar a la función para guardar el producto en la base de datos
-          this.guardarProducto(value);
-      }
-    } 
-  }
-    
-      
-  
+      task.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(url => {
+            value.imagen = url;
+            console.log(value)
+            this.guardarProducto(value);
+          });
+        })
+      ).subscribe();
+    } else {
+      value.imagen = file ? this.producto.imagen : '';
+      this.guardarProducto(value);
+    }
+  }   
 
   guardarProducto(producto: Producto) {
     this.productoServicio.agregarProducto(producto);
@@ -101,11 +81,11 @@ export class ProductosComponent implements OnInit {
   }
 
   cerrarModal() {
-    this.botonCerrar.nativeElement.click();
+    this.botonCerrar?.nativeElement?.click();
   }
 
   limpiar() {
-    this.botonLimpiar.nativeElement.click();
+    this.botonLimpiar?.nativeElement?.click();
   }
 
   resetForm() {
@@ -114,14 +94,12 @@ export class ProductosComponent implements OnInit {
   }
 
   toggleSidebar() {
-    console.log('OPEN')
     this.sidebarService.toggleSidebar();
   }
 
   buscarProductos(query: string): void {
     this.productoServicio.search(query).subscribe(productos => {
       this.productos = productos;
-      console.log(this.productos)
     });
   }
 
@@ -134,10 +112,7 @@ export class ProductosComponent implements OnInit {
         this.imagenPreview = e.target.result;
       };
       reader.readAsDataURL(file);
-
       this.producto.imagen = file; 
     }
   }
-  
-  
 }
