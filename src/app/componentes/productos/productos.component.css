@@ -1,0 +1,28 @@
+.bg-custom {
+    background-color: #003870;
+}
+
+.img-thumbnail {
+    transition: transform 0.3s ease;
+    object-fit: cover;
+    aspect-ratio: 1;
+
+    /* Optional: constrain image size */
+    max-block-size: 150px;
+  }
+  
+  .img-thumbnail:hover {
+    transform: scale(1.1);
+  }
+
+  /* Estilos personalizados para el tooltip */
+.tooltip-inner {
+    background-color: black !important; /* Fondo negro */
+    color: white !important; /* Texto blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 5px 10px; /* Espaciado interno */
+  }
+  
+  .tooltip.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: black !important; /* Fondo negro para la flecha */
+  }
