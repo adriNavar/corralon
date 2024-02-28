@@ -10,4 +10,6 @@ export interface Producto {
   precio?: number;
   categoria?: number;
   imagen?: string | File;
+  baja?:boolean;
+  numero?:number;
 }

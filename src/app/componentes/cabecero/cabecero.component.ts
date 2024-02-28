@@ -3,7 +3,7 @@ import { ConfiguracionServicio } from './../../servicios/configuracion.service';
 import { LoginService } from './../../servicios/login-service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { SidebarService } from '../../servicios/sidebar.service';
 @Component({
   selector: 'app-cabecero',
   templateUrl: './cabecero.component.html',
@@ -20,6 +20,7 @@ export class CabeceroComponent implements OnInit {
   constructor(private loginService:LoginService,
               private router:Router,
               private configuracionServicio:ConfiguracionServicio,
+              private sidebarService: SidebarService,
               private loaderService: LoaderService ) { }
 
   ngOnInit(): void {
@@ -42,13 +43,17 @@ export class CabeceroComponent implements OnInit {
     })
   }
 
+  toggleSidebar() {
+    this.sidebarService.toggleSidebar();
+  }
+
   logout(){
     // Mostrar el loader
     this.loaderService.showLoader();
 
     this.loginService.logout();
     this.isLoggedIn=false;
-    
+
     // Ocultar el loader
     this.loaderService.hideLoader();
     this.router.navigate(['/login']);

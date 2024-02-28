@@ -22,19 +22,19 @@
           <table class="table table-striped">
             <thead class="table-dark">
               <tr>
-                <th>#</th>
+                <th>Numero</th>
                 <th>Nombre</th>
-                <th>ID Categoría</th>
+
                 <th></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let categoria of categorias; let i = index">
-                <td>{{ i + 1 }}</td>
+                <td>{{ categoria.numero }}</td>
                 <td>{{ categoria.nombre }}</td>
-                <td>{{ categoria.id_categoria }}</td>
+
                 <td>
-                  <a routerLink="/categoria/editar/{{ categoria.id_categoria }}" class="btn btn-secondary">
+                  <a routerLink="/categoria/editar/{{ categoria.id }}" class="btn btn-secondary">
                     <i class="fas fa-angle-double-right"></i> Editar
                   </a>
                 </td>
@@ -90,15 +90,15 @@
           </div>
 
           <!-- Campo ID Categoría -->
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="id_categoria">ID Categoría</label>
             <input type="number" name="id_categoria" class="form-control" #id_categoria="ngModel"
-              [(ngModel)]="categoria.id_categoria" [ngClass]="{'is-invalid': id_categoria.errors && id_categoria.touched}"
+              [(ngModel)]="categoria.id" [ngClass]="{'is-invalid': id_categoria.errors && id_categoria.touched}"
               required>
             <div [hidden]="!id_categoria.errors?.['required']" class="invalid-feedback">
               ID Categoría Requerido
             </div>
-          </div>
+          </div> -->
         </div>
 
         <!-- Botón Guardar -->

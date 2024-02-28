@@ -1,4 +1,6 @@
 export interface Categoria {
-  id_categoria?: number;
+  id?: string;
   nombre?: string;
+  numero?:number;
+  baja?:boolean;
 }

@@ -11,7 +11,7 @@ export class ProductoServicio {
   producto: Observable<Producto>;
 
   constructor(private db: AngularFirestore) {
-    this.productosColeccion = db.collection('productos', ref => ref.orderBy('nombre', 'asc')); // traigo de la db de forma ascendente asc
+    this.productosColeccion = db.collection('productos', ref => ref.orderBy('numero', 'asc')); // traigo de la db de forma ascendente asc
   }
 
   getProductos(): Observable<Producto[]> {
@@ -49,7 +49,12 @@ export class ProductoServicio {
 }
 
 
-  agregarProducto(producto: Producto) {
+  async agregarProducto(producto: Producto) {
+    const productoSnapshot= await this.productosColeccion.ref.get();
+    const productos= productoSnapshot.docs.map(doc => doc.data() as Producto);
+
+    const maxNumero = productos.length > 0 ? Math.max(...productos.map(prod =>prod.numero)): 0;
+    producto.numero = maxNumero +1;
     this.productosColeccion.add(producto);
   }
 

@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Categoria } from 'src/app/modelos/categoria.model'; // Importa la clase Categoria
 import { CategoriaServicio } from './../../servicios/categoria.service';
+import { SidebarService } from 'src/app/servicios/sidebar.service';
 
 @Component({
   selector: 'app-categorias',  // Asegúrate de que sea 'app-categorias' o el selector correcto
@@ -11,7 +12,7 @@ import { CategoriaServicio } from './../../servicios/categoria.service';
 })
 
 export class CategoriasComponent implements OnInit {
-
+  isSidebarOpen: boolean = false;
   categorias: Categoria[]; // Cambia el tipo de dato de productos a Categoria
   categoria: Categoria = {
     // No asignes un valor a id_categoria, Angular lo inicializará a undefined
@@ -23,7 +24,8 @@ export class CategoriasComponent implements OnInit {
   @ViewChild("botonLimpiar") botonLimpiar: ElementRef;
 
   constructor(private categoriaServicio: CategoriaServicio, // Cambia el servicio a CategoriaServicio
-              private flashMessage: FlashMessagesService) { }
+              private flashMessage: FlashMessagesService,
+              private sidebarService: SidebarService) { }
 
   ngOnInit(): void {
     this.categoriaServicio.getCategorias().subscribe(
@@ -39,12 +41,17 @@ export class CategoriasComponent implements OnInit {
         timeout: 4000
       });
     } else {
+        // Establecemos baja como true por defecto
+    value.baja = false;
       this.categoriaServicio.agregarCategoria(value);
       this.categoriaForm.resetForm();
       this.cerrarModal();
     }
   }
 
+  toggleSidebar() {
+    this.sidebarService.toggleSidebar();
+  }
   cerrarModal() {
     this.botonCerrar.nativeElement.click();
   }

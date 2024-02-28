@@ -12,7 +12,7 @@ import { CategoriaServicio } from 'src/app/servicios/categoria.service';
 export class EditarCategoriaComponent implements OnInit {
 
   categoria: Categoria;
-  id: number;
+  id: string;
 
   constructor(private categoriaServicio: CategoriaServicio,
     private flashMessage: FlashMessagesService,
@@ -33,7 +33,7 @@ export class EditarCategoriaComponent implements OnInit {
         timeout: 4000
       });
     } else {
-      value.id_categoria = this.id;
+      value.id = this.id;
       this.categoriaServicio.modificarCategoria(value);
       this.router.navigate(['/categorias']); // Cambia la ruta a donde quieras redirigir después de guardar.
     }
