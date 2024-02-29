@@ -23,7 +23,13 @@ export class ProductoServicio {
           datos.id = accion.payload.doc.id;
           return datos;
         })
-      })
+      }),
+      map(productos=>{
+        //Filtro para los productos dados de baja
+        return productos.filter(producto =>!producto.baja);
+
+        })
+
     );
     return this.productos;
   }
