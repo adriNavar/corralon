@@ -5,7 +5,15 @@
       <div class="card">
         <div class="card-header">
           <h4 class="m-0 me-md-3">Productos</h4>
-          <a href="#" class="btn btn-sm btn-primary me-md-3" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">+ Nuevo</a>
+          <a 
+            href="#" 
+            class="btn btn-sm btn-primary me-md-3" 
+            data-bs-toggle="modal" 
+            data-bs-target="#agregarProductoModal" 
+            (click)="openProductoModal()"
+          >
+            + Nuevo
+          </a>
           <button class="btn btn-sm btn-success" (click)="toggleSidebar()">Ventas</button>
         </div>
         <div class="card-body">
@@ -46,7 +54,7 @@
                     <ng-container *ngIf="!producto.imagen">sin imagen</ng-container>
                   </td>
                   <td>
-                    <button routerLink="/producto/editar/{{ producto.id }}" class="btn btn-warning btn-sm" style="background-color: orange;" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                    <button class="btn btn-warning btn-sm" style="background-color: orange;" data-bs-toggle="modal" data-bs-target="#agregarProductoModal" (click)="openProductoModal(producto)">
                       <i class="fas fa-edit" style="color: white;"></i>
                     </button>
                   </td>
@@ -61,14 +69,12 @@
   </div>
 </section>
 
-
-
 <!-- Agregar producto modal -->
 <div class="modal fade" id="agregarProductoModal">
   <div class="modal-dialog modal-lg d-flex justify-content-center align-items-center">
     <div class="modal-content">
       <div class="modal-header bg-custom text-white">
-        <h5 class="modal-title">Agregar Producto</h5>
+        <h5 class="modal-title">{{ editMode ? 'Editar Producto' : 'Agregar Producto' }}</h5>
         <button
           class="close"
           data-bs-dismiss="modal"
@@ -84,7 +90,7 @@
       <flash-messages></flash-messages>
 
       <!-- Formulario de producto -->
-      <form #productoForm="ngForm" (ngSubmit)="agregar(productoForm)">
+      <form #productoForm="ngForm" (ngSubmit)="editMode ? editar(productoForm) : agregar(productoForm)">
         <div class="modal-body">
           <div class="row">
             <div class="col-md-6">
@@ -98,6 +104,7 @@
                   #nombre="ngModel"
                   [(ngModel)]="producto.nombre"
                   [ngClass]="{'is-invalid':nombre.errors && nombre.touched}"
+                  (ngModelChange)="onInputChange()"
                   required
                   minlength="2"
                   tabindex="1"
@@ -121,6 +128,7 @@
                   #marca="ngModel"
                   [(ngModel)]="producto.marca"
                   [ngClass]="{'is-invalid':marca.errors && marca.touched}"
+                  (ngModelChange)="onInputChange()"
                   required
                   minlength="2"
                   tabindex="3"
@@ -144,6 +152,7 @@
                   #precio="ngModel"
                   [(ngModel)]="producto.precio"
                   [ngClass]="{'is-invalid':precio.errors && precio.touched}"
+                  (ngModelChange)="onInputChange()"
                   required
                   tabindex="5"
                 >
@@ -163,6 +172,7 @@
                   #stock="ngModel"
                   [(ngModel)]="producto.stock"
                   [ngClass]="{'is-invalid':stock.errors && stock.touched}"
+                  (ngModelChange)="onInputChange()"
                   required
                   tabindex="7"
                 >
@@ -183,6 +193,7 @@
                   #descripcion="ngModel"
                   [(ngModel)]="producto.descripcion"
                   [ngClass]="{'is-invalid':descripcion.errors && descripcion.touched}"
+                  (ngModelChange)="onInputChange()"
                   required
                   minlength="2"
                   tabindex="2"
@@ -206,6 +217,7 @@
                   #categoria="ngModel"
                   [(ngModel)]="producto.categoria"
                   [ngClass]="{'is-invalid':categoria.errors && categoria.touched}"
+                  (ngModelChange)="onInputChange()"
                   required
                   tabindex="4"
                 >
@@ -240,17 +252,24 @@
 
         <!-- Botón Guardar -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
+          <button 
+            type="submit" 
+            class="btn btn-primary" 
+            [disabled]="!guardarProducto || procesando"
+            (click)="agregarOEditarProducto(productoForm)"
+          >
+            <ng-container *ngIf="!procesando; else procesandoTemplate">
+              Guardar
+            </ng-container>
+            <ng-template #procesandoTemplate>
+              Procesando...
+            </ng-template>
+          </button>
         </div>
       </form>
-
       <!-- Fin del formulario de producto -->
-
     </div>
   </div>
 </div>
-
-
-
 
 <app-sidebar></app-sidebar>
