@@ -87,6 +87,8 @@ export class ProductoServicio {
 
   eliminarProducto(producto: Producto) {
     this.productoDoc = this.db.doc<Producto>(`productos/${producto.id}`);
-    this.productoDoc.delete();
+    // Actualizar el campo 'baja' a true en lugar de eliminar el documento
+    this.productoDoc.update({ baja: true });
   }
+
 }
