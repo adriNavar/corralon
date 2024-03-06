@@ -210,22 +210,26 @@
               <!-- Campo Categoría -->
               <div class="form-group">
                 <label for="categoria">Categoría</label>
-                <input
-                  type="number"
+                <select
                   name="categoria"
                   class="form-control"
                   #categoria="ngModel"
                   [(ngModel)]="producto.categoria"
-                  [ngClass]="{'is-invalid':categoria.errors && categoria.touched}"
+                  [ngClass]="{'is-invalid': categoria.errors && categoria.touched}"
                   (ngModelChange)="onInputChange()"
                   required
                   tabindex="4"
                 >
+                  <option value="" disabled selected>Seleccionar Categoría</option>
+                  <option *ngFor="let categoria of categorias" [value]="categoria.nombre">{{ categoria.nombre }}</option>
+                </select>
                 <!-- Validación -->
                 <div [hidden]="!categoria.errors?.['required']" class="invalid-feedback">
                   Categoría Requerida
                 </div>
               </div>
+
+
 
               <!-- Campo para cargar la imagen -->
               <div class="form-group">
