@@ -36,6 +36,7 @@ import { EditarCategoriaComponent } from './componentes/editar-categoria/editar-
 import { CategoriaServicio } from './servicios/categoria.service';
 import { AppSidebarComponent } from './componentes/app-sidebar/app-sidebar.component';
 import { SidebarService } from './servicios/sidebar.service';
+import { AumentoComponent } from './aumento/aumento.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { SidebarService } from './servicios/sidebar.service';
     LoaderComponent,
     CategoriasComponent,
     EditarCategoriaComponent,
-    AppSidebarComponent
+    AppSidebarComponent,
+    AumentoComponent
   ],
   imports: [
     BrowserModule,
