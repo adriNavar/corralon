@@ -36,6 +36,8 @@ import { CategoriaServicio } from './servicios/categoria.service';
 import { AppSidebarComponent } from './componentes/app-sidebar/app-sidebar.component';
 import { SidebarService } from './servicios/sidebar.service';
 
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +64,7 @@ import { SidebarService } from './servicios/sidebar.service';
     FormsModule,
     FlashMessagesModule.forRoot(),
     BrowserAnimationsModule,
+    NgxPaginationModule
   ],
   providers: [ProductoServicio,
     LoaderService,

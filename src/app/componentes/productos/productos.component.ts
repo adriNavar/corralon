@@ -28,6 +28,14 @@ export class ProductosComponent implements OnInit {
   // Define una variable para el valor por defecto del select
   defaultValue: any = '';
 
+  paginaActual: number = 1; // Página actual
+  itemsPorPagina: number = 5; // Cantidad de productos por página
+
+  paginationLabels: any = {
+    previous: 'Anterior',
+    next: 'Siguiente'
+  };
+
   @ViewChild("productoForm") productoForm: NgForm;
   @ViewChild("botonCerrar") botonCerrar: ElementRef;
   @ViewChild("botonLimpiar") botonLimpiar: ElementRef;
@@ -53,6 +61,11 @@ export class ProductosComponent implements OnInit {
     });
     this.guardarProducto = false;
     this.procesando = false;
+  }
+
+  // Método para cambiar de página
+  cambiarPagina(pagina: number): void {
+    this.paginaActual = pagina;
   }
 
   onInput(event: any): void {
@@ -90,8 +103,12 @@ export class ProductosComponent implements OnInit {
       this.editMode = false;
       this.guardarProducto = false; // Deshabilitar el botón al abrir en modo agregar
       this.imagenPreview = null; // Limpia la vista previa de la imagen
+      
+      // Establecer la categoría predeterminada al cargar el modal en modo de carga
+      this.producto.categoria = this.defaultValue;
     }
   }
+  
   
   
   
