@@ -4,7 +4,16 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h4 class="m-0 me-md-3">Productos</h4>
+          <h4 class="m-0 me-md-3">Productos 
+            <span  
+              class="badge bg-primary text-white" 
+              style="cursor: pointer; transition: opacity 0.3s;" 
+              onmouseover="this.style.opacity=0.8" 
+              onmouseout="this.style.opacity=1"
+            >
+              #{{ productos.length }}
+            </span>
+          </h4>
           <div class="d-flex flex-wrap align-items-center gap-1">
             <div class="form-group mb-0">
               <input 
