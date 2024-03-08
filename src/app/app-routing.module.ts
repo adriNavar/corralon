@@ -8,7 +8,6 @@ import { RegistroComponent } from './componentes/registro/registro.component';
 import { TableroComponent } from './componentes/tablero/tablero.component';
 import { AuthGuard } from './guardianes/auth.guard';
 import { ConfiguracionGuard } from './guardianes/configuracion.guard';
-import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
 import { CategoriasComponent } from './componentes/categorias/categorias.component';
 import { EditarCategoriaComponent } from './componentes/editar-categoria/editar-categoria.component';
 
@@ -18,7 +17,6 @@ const routes: Routes = [
   {path:'login',component: LoginComponent},
   {path:'registrarse',component: RegistroComponent,canActivate: [ConfiguracionGuard]},
   {path:'configuracion',component: ConfiguracionComponent,canActivate: [AuthGuard]},
-  {path:'producto/editar/:id',component: EditarProductoComponent,canActivate: [AuthGuard]},
   {path:'categorias/editar/:id',component: EditarCategoriaComponent,canActivate: [AuthGuard]},
   { path: 'categorias', component: CategoriasComponent, canActivate: [AuthGuard] },// Agrega esta línea para la gestión de categorías
   {path:'**',component: NoEncontradoComponent},

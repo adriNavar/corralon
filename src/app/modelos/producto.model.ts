@@ -8,7 +8,7 @@ export interface Producto {
   descripcion?: string;
   stock?: number;
   precio?: number;
-  categoria?: number;
+  categoria?: string;
   imagen?: string | File;
   baja?:boolean;
   numero?:number;

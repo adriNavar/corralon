@@ -25,6 +25,16 @@ export class ProductosComponent implements OnInit {
 
   guardarProducto: boolean = false;
   procesando: boolean = false;
+  // Define una variable para el valor por defecto del select
+  defaultValue: any = '';
+
+  paginaActual: number = 1; // Página actual
+  itemsPorPagina: number = 5; // Cantidad de productos por página
+
+  paginationLabels: any = {
+    previous: 'Anterior',
+    next: 'Siguiente'
+  };
 
   @ViewChild("productoForm") productoForm: NgForm;
   @ViewChild("botonCerrar") botonCerrar: ElementRef;
@@ -40,9 +50,22 @@ export class ProductosComponent implements OnInit {
 
   ngOnInit(): void {
     this.productoServicio.getProductos().subscribe(productos => this.productos = productos);
-    this.categoriaServicio.getCategorias().subscribe(categorias => this.categorias = categorias);
+    this.categoriaServicio.getCategorias().subscribe(categorias => {
+      this.categorias = categorias;
+      if (this.editMode) {
+        // Si estamos en modo edición, establecer la categoría del producto
+        this.producto.categoria = this.producto.categoria; // No es necesario hacer cambios
+      } else {
+        this.producto.categoria = this.defaultValue;
+      }
+    });
     this.guardarProducto = false;
     this.procesando = false;
+  }
+
+  // Método para cambiar de página
+  cambiarPagina(pagina: number): void {
+    this.paginaActual = pagina;
   }
 
   onInput(event: any): void {
@@ -52,9 +75,8 @@ export class ProductosComponent implements OnInit {
   }
 
   onInputChange(): void {
-    // Verificamos si todos los campos obligatorios están completos
-    this.guardarProducto = 
-      !!this.producto.nombre && !!this.producto.marca && !!this.producto.descripcion 
+    // Verifica si todos los campos obligatorios están completos, incluido el campo de categoría
+    this.guardarProducto = !!this.producto.nombre && !!this.producto.marca && !!this.producto.descripcion 
       && !!this.producto.stock && !!this.producto.precio && !!this.producto.categoria;
   }
 
@@ -77,14 +99,16 @@ export class ProductosComponent implements OnInit {
         reader.readAsDataURL(producto.imagen);
       }
     } else {
-      // Agregar nuevo producto
       this.producto = {} as Producto;
       this.editMode = false;
       this.guardarProducto = false; // Deshabilitar el botón al abrir en modo agregar
-      // Resto de la lógica para configurar un nuevo producto
       this.imagenPreview = null; // Limpia la vista previa de la imagen
+      
+      // Establecer la categoría predeterminada al cargar el modal en modo de carga
+      this.producto.categoria = this.defaultValue;
     }
   }
+  
   
   
   
@@ -181,6 +205,7 @@ export class ProductosComponent implements OnInit {
       this.cerrarModal();
       this.guardarProducto = false; // Desbloquear el botón
       this.procesando = false; // Desactiva el estado de procesamiento
+      this.imagenPreview = null;
     }).catch(error => {
       console.error('Error al agregar el producto:', error);
       // Muestra un SweetAlert de error si ocurre algún problema

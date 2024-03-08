@@ -27,7 +27,6 @@ import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
 
 import { ProductosComponent } from './componentes/productos/productos.component';
-import { EditarProductoComponent } from './componentes/editar-producto/editar-producto.component';
 import { ProductoServicio } from './servicios/producto.service';
 import { LoaderService } from './servicios/loader.service';
 import { LoaderComponent } from './componentes/loader/loader.component';
@@ -38,20 +37,20 @@ import { AppSidebarComponent } from './componentes/app-sidebar/app-sidebar.compo
 import { SidebarService } from './servicios/sidebar.service';
 import { AumentoComponent } from './aumento/aumento.component';
 
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @NgModule({
   declarations: [
     AppComponent,
     CabeceroComponent,
     TableroComponent,
-    ProductosComponent, // Agrega el componente de productos
-    EditarProductoComponent, // Agrega el componente de editar producto
+    ProductosComponent, 
     LoginComponent,
     RegistroComponent,
     ConfiguracionComponent,
     NoEncontradoComponent,
     PiePaginaComponent,
     ProductosComponent,
-    EditarProductoComponent,
     LoaderComponent,
     CategoriasComponent,
     EditarCategoriaComponent,
@@ -67,6 +66,7 @@ import { AumentoComponent } from './aumento/aumento.component';
     FormsModule,
     FlashMessagesModule.forRoot(),
     BrowserAnimationsModule,
+    NgxPaginationModule
   ],
   providers: [ProductoServicio,
     LoaderService,
