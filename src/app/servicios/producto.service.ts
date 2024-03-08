@@ -23,7 +23,13 @@ export class ProductoServicio {
           datos.id = accion.payload.doc.id;
           return datos;
         })
-      })
+      }),
+      map(productos=>{
+        //Filtro para los productos dados de baja
+        return productos.filter(producto =>!producto.baja);
+
+        })
+
     );
     return this.productos;
   }
@@ -81,6 +87,8 @@ export class ProductoServicio {
 
   eliminarProducto(producto: Producto) {
     this.productoDoc = this.db.doc<Producto>(`productos/${producto.id}`);
-    this.productoDoc.delete();
+    // Actualizar el campo 'baja' a true en lugar de eliminar el documento
+    this.productoDoc.update({ baja: true });
   }
+
 }

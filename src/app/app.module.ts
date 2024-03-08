@@ -35,6 +35,7 @@ import { EditarCategoriaComponent } from './componentes/editar-categoria/editar-
 import { CategoriaServicio } from './servicios/categoria.service';
 import { AppSidebarComponent } from './componentes/app-sidebar/app-sidebar.component';
 import { SidebarService } from './servicios/sidebar.service';
+import { AumentoComponent } from './aumento/aumento.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -53,7 +54,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     LoaderComponent,
     CategoriasComponent,
     EditarCategoriaComponent,
-    AppSidebarComponent
+    AppSidebarComponent,
+    AumentoComponent
   ],
   imports: [
     BrowserModule,
