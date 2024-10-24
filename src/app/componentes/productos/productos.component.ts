@@ -9,6 +9,7 @@ import { SidebarService } from '../../servicios/sidebar.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { AumentoComponent } from 'src/app/aumento/aumento.component';
 
 @Component({
   selector: 'app-productos',
@@ -39,6 +40,8 @@ export class ProductosComponent implements OnInit {
   @ViewChild("productoForm") productoForm: NgForm;
   @ViewChild("botonCerrar") botonCerrar: ElementRef;
   @ViewChild("botonLimpiar") botonLimpiar: ElementRef;
+  // Obtener una referencia al modal de actualización de precios usando ViewChild
+  @ViewChild(AumentoComponent) actualizarPreciosModal: AumentoComponent;
   imagenPreview: string | ArrayBuffer;
 
   constructor(private productoServicio: ProductoServicio,
@@ -109,8 +112,15 @@ export class ProductosComponent implements OnInit {
     }
   }
   
-  
-  
+  // Método para abrir el modal de actualización de precios
+  openActualizarPreciosModal() {
+    // Verificar si el modal de actualización de precios existe antes de intentar abrirlo
+    if (this.actualizarPreciosModal) {
+      this.actualizarPreciosModal.abrirModal();
+    } else {
+      console.error('El modal de actualización de precios no está disponible.');
+    }
+  }
   
   agregarOEditarProducto(formulario: NgForm) {
     if (this.editMode) {

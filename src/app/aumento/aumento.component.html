@@ -1,1 +1,116 @@
-<p>aumento works!</p>
+<!-- Agregar producto modal -->
+<div class="modal fade" id="actualizarPreciosModal">
+    <div class="modal-dialog modal-lg d-flex justify-content-center align-items-center">
+      <div class="modal-content">
+        <div class="modal-header bg-custom text-white">
+          <h5 class="modal-title">Actualizar Precios</h5>
+          <div class="ms-auto">
+            <button
+              class="close btn btn-sm btn-danger"
+              data-bs-dismiss="modal"
+              #botonCerrar
+              #botonLimpiar
+            >
+              <span>&times;</span>
+            </button>
+          </div>
+        </div>
+  
+        <!-- Flash Messages -->
+        <flash-messages></flash-messages>
+  
+        <!-- Formulario de actualización de Precios -->
+      <form #actualizarPreciosForm="ngForm" (ngSubmit)="actualizarPrecios(actualizarPreciosForm)">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-4">
+              <!-- Campo primer filtro -->
+              <div class="form-group">
+                <label for="actualizar-por">Actualizar Precios por: </label>
+                <select
+                  name="categoria"
+                  class="form-control"
+                  (ngModelChange)="onInputChange()"
+                  required
+                  tabindex="4"
+                >
+                  <option value="" disabled selected>-- Seleccionar --</option>
+                  <option value="1">TODOS</option>
+                  <option value="2">Categoría</option>
+                  <option value="3">Proveedor</option>
+                  <option value="4">Marca</option>
+                </select>
+                <!-- Validación -->
+                <!-- <div [hidden]="!categoria.errors?.['required']" class="invalid-feedback">
+                  Filtro Requerido
+                </div> -->
+              </div>
+            </div>
+
+            <div class="col-md-6">
+                <!-- Otra columna de 6 -->
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <!-- Campo primer filtro -->
+              <div class="form-group">
+                <label for="valor">Valor / Porcentaje: </label>
+                <select
+                  name="valor"
+                  class="form-control"
+                  (ngModelChange)="onInputChange()"
+                  required
+                  tabindex="4"
+                  disabled
+                >
+                  <option value="" disabled selected>-- Seleccionar --</option>
+                  <option value="1">VALOR</option>
+                  <option value="2">PORCENTAJE</option>
+                </select>
+                <!-- Validación -->
+                <!-- <div [hidden]="!categoria.errors?.['required']" class="invalid-feedback">
+                  Filtro Requerido
+                </div> -->
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <!-- Campo primer filtro -->
+              <div class="form-group">
+                <label for="numero">Ingresar valor/porc: </label>
+                <input
+                  type="number"
+                  name="numero"
+                  class="form-control"
+                  (ngModelChange)="onInputChange()"
+                  required
+                  tabindex="5"
+                  disabled
+                >
+                <!-- Validación -->
+                <!-- <div [hidden]="!categoria.errors?.['required']" class="invalid-feedback">
+                  Filtro Requerido
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón Guardar -->
+        <div class="modal-footer">
+          <button 
+            type="submit" 
+            class="btn btn-primary" 
+            disabled
+          >
+            Confirmar
+          </button>
+        </div>
+      </form>
+      <!-- Fin del formulario de producto -->
+        <!-- Fin del formulario de producto -->
+      </div>
+    </div>
+  </div>
