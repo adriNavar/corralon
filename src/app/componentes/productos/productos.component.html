@@ -161,7 +161,7 @@
               type="number"
               class="form-control"
               id="stockDisponible"
-              [value]="productoParaCarrito?.stock"
+              [value]="getStockDisponible(productoParaCarrito)"
               readonly
             >
           </div>
@@ -173,17 +173,24 @@
               id="cantidad"
               name="cantidad"
               [(ngModel)]="cantidadSeleccionada"
-               [max]="productoParaCarrito?.stock"
+               [max]="getStockDisponible(productoParaCarrito)"
               min="1"
               required
+              (change)="validarCantidad()"
             >
+            <div *ngIf="cantidadSeleccionada > getStockDisponible(productoParaCarrito)" class="text-danger mt-1">
+              La cantidad supera el stock disponible ({{ getStockDisponible(productoParaCarrito) }} unidades).
+            </div>
           </div>
         </div>
 
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" [disabled]="cantidadSeleccionada < 1">
-            Agregar
-          </button>
+          <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="cantidadSeleccionada < 1 || cantidadSeleccionada > getStockDisponible(productoParaCarrito)">
+          Agregar
+        </button>
         </div>
       </form>
     </div>

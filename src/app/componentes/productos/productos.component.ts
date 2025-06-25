@@ -91,6 +91,12 @@ export class ProductosComponent implements OnInit {
     });
 
   }
+  validarCantidad(): void {
+    const disponible = this.getStockDisponible(this.productoParaCarrito);
+    if (this.cantidadSeleccionada > disponible) {
+      this.cantidadSeleccionada = disponible;
+    }
+  }
 
   // Método para cambiar de página
   cambiarPagina(pagina: number): void {
