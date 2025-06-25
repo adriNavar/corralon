@@ -318,6 +318,7 @@ agregarAlCarrito() {
 
 }
 getStockDisponible(producto: Producto): number {
+  if (!producto || producto.stock == null) return 0;
   const itemEnCarrito = this.carrito.find(i => i.productoId === producto.id);
   const reservado = itemEnCarrito ? itemEnCarrito.cantidad : 0;
   return producto.stock - reservado;
