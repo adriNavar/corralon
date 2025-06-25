@@ -74,6 +74,11 @@ export class CarritoService {
   getTotal(): number {
     return this.carrito.reduce((total, item) => total + item.cantidad * item.precioUnitario, 0);
   }
+  actualizarItems(nuevosItems: ItemCarrito[]) {
+    this.carrito = [...nuevosItems]; // Reemplaza el carrito actual
+    this.carritoSubject.next([...this.carrito]); // Emite los nuevos valores
+    this.guardarCarritoEnLocalStorage(); // Guarda en localStorage
+  }
 
   limpiarCarrito() {
     this.carrito = [];

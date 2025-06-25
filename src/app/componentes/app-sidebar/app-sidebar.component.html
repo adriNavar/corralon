@@ -2,7 +2,7 @@
   <button class="close-btn" (click)="toggleSidebar()">
     <b> >> </b>
   </button>
-  <h3>VENTAS</h3>
+  <h3>CARRITO</h3>
   <hr>
 
   <div *ngIf="ventaActual.length > 0; else carritoVacio">
@@ -13,18 +13,23 @@
           <th>Cant.</th>
           <th>Precio</th>
           <th>Subtotal</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of ventaActual">
           <td>{{ item.nombre }}</td>
-          <td>{{ item.cantidad }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-secondary me-1" >➖</button>
+            {{ item.cantidad }}
+
+            <button class="btn btn-sm btn-outline-secondary me-1" >➕</button>
+          </td>
           <td>{{ item.precioUnitario | currency }}</td>
           <td>{{ (item.cantidad * item.precioUnitario) | currency }}</td>
           <td>
-            <button (click)="modificar(item)">Modificar</button>
 
-
+            <button class="btn btn-sm btn-outline-danger" >🗑️</button>
           </td>
         </tr>
       </tbody>

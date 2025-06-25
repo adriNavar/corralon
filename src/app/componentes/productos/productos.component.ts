@@ -34,7 +34,7 @@ export class ProductosComponent implements OnInit {
   procesando: boolean = false;
   // Define una variable para el valor por defecto del select
   defaultValue: any = '';
-
+  total: number = 0;
   paginaActual: number = 1; // Página actual
   itemsPorPagina: number = 5; // Cantidad de productos por página
 
@@ -323,17 +323,46 @@ getStockDisponible(producto: Producto): number {
   const reservado = itemEnCarrito ? itemEnCarrito.cantidad : 0;
   return producto.stock - reservado;
 }
+// getStockDisponiblePorId(productoId: string): number {
+//   const producto = this.productos.find(p => p.id === productoId);
+//   return this.getStockDisponible(producto);
+// }
 
-modificarCantidad(item: ItemCarrito) {
-  const producto = this.productos.find(p => p.id === item.productoId);
-  if (!producto) return;
+// sumarCantidad(item: ItemCarrito): void {
+//   if (this.getStockDisponiblePorId(item.productoId) > item.cantidad) {
+//     item.cantidad++;
+//     this.actualizarCarrito();
+//   }
+// }
 
-  this.productoParaCarrito = producto;
-  this.cantidadSeleccionada = item.cantidad;
+// restarCantidad(item: ItemCarrito): void {
+//   if (item.cantidad > 1) {
+//     item.cantidad--;
+//     this.actualizarCarrito();
+//   } else {
+//     this.eliminarItem(item);
+//   }
+// }
 
-  const modal = new bootstrap.Modal(document.getElementById('carritoModal'));
-  modal.show();
-}
+// eliminarItem(item: ItemCarrito): void {
+//   this.ventaActual = this.ventaActual.filter(i => i.productoId !== item.productoId.toString());
+
+//   this.actualizarCarrito();
+// }
+// calcularTotal(): void {
+//   this.total = this.ventaActual.reduce((sum, item) => {
+//     return sum + item.cantidad * item.precioUnitario;
+//   }, 0);
+// }
+
+// actualizarCarrito(): void {
+//   this.carritoService.actualizarItems(this.ventaActual); // si tenés algo así
+//   this.calcularTotal();
+// }
+
+
+
+
   onFileSelected(event): void {
     const file: File = event.target.files[0];
 
