@@ -4,11 +4,11 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h4 class="m-0 me-md-3">Productos 
-            <span  
-              class="badge bg-primary text-white" 
-              style="cursor: pointer; transition: opacity 0.3s;" 
-              onmouseover="this.style.opacity=0.8" 
+          <h4 class="m-0 me-md-3">Productos
+            <span
+              class="badge bg-primary text-white"
+              style="cursor: pointer; transition: opacity 0.3s;"
+              onmouseover="this.style.opacity=0.8"
               onmouseout="this.style.opacity=1"
             >
               #{{ productos.length }}
@@ -16,45 +16,45 @@
           </h4>
           <div class="d-flex flex-wrap align-items-center gap-1">
             <div class="form-group mb-0">
-              <input 
-                type="text" 
-                class="form-control" 
-                placeholder="Buscar productos" 
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Buscar productos"
                 (input)="onInput($event)"
               >
             </div>
-            <a 
-              href="#" 
-              class="btn btn-sm btn-primary" 
-              data-bs-toggle="modal" 
-              data-bs-target="#agregarProductoModal" 
+            <a
+              href="#"
+              class="btn btn-sm btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#agregarProductoModal"
               (click)="openProductoModal()"
             >
               + Nuevo
             </a>
 
-            <a 
-              href="#" 
-              class="btn btn-sm btn-warning" 
-              data-bs-toggle="modal" 
-              data-bs-target="#actualizarPreciosModal" 
+            <a
+              href="#"
+              class="btn btn-sm btn-warning"
+              data-bs-toggle="modal"
+              data-bs-target="#actualizarPreciosModal"
               (click)="openActualizarPreciosModal()"
             >
-            $ Precios 
+            $ Precios
           </a>
 
             <button class="btn btn-sm btn-success" (click)="toggleSidebar()">Ventas</button>
           </div>
         </div>
-        
+
         <div class="card-body">
           <div class="table-responsive">
 
             <!-- Agrega el componente de paginación -->
             <div class="pagination d-flex justify-content-center">
-              <pagination-controls 
-                (pageChange)="cambiarPagina($event)" 
-                previousLabel="{{ paginationLabels.previous }}" 
+              <pagination-controls
+                (pageChange)="cambiarPagina($event)"
+                previousLabel="{{ paginationLabels.previous }}"
                 nextLabel="{{ paginationLabels.next }}"
               ></pagination-controls>
             </div>
@@ -81,7 +81,8 @@
                   <td>{{ producto.nombre }}</td>
                   <td>{{ producto.marca }}</td>
                   <td>{{ producto.descripcion }}</td>
-                  <td>{{ producto.stock }}</td>
+                  <td>{{ getStockDisponible(producto) }}</td>
+
                   <td>{{ producto.precio | currency: "ARG":"$" }}</td>
                   <td>{{ producto.categoria }}</td>
                   <td>
@@ -96,6 +97,13 @@
                     <button class="btn btn-warning btn-sm" style="background-color: orange;" data-bs-toggle="modal" data-bs-target="#agregarProductoModal" (click)="openProductoModal(producto)">
                       <i class="fas fa-edit" style="color: white;"></i>
                     </button>
+
+                    <button class="btn btn-warning btn-sm" style="background-color: rgb(72, 255, 0);" data-bs-toggle="modal" data-bs-target="#carritoModal" (click)="openCarritoModal(producto)">
+                      <i class="fas fa-shopping-cart" style="color: white;"></i>
+                    </button>   <!-- Falta cambiar para el modal de compra -->
+
+
+
                   </td>
                   <!-- <td>{{ producto.baja }}</td> -->
                 </tr>
@@ -103,9 +111,9 @@
             </table>
             <!-- Agrega el componente de paginación -->
             <div class="pagination d-flex justify-content-center">
-              <pagination-controls 
-                (pageChange)="cambiarPagina($event)" 
-                previousLabel="{{ paginationLabels.previous }}" 
+              <pagination-controls
+                (pageChange)="cambiarPagina($event)"
+                previousLabel="{{ paginationLabels.previous }}"
                 nextLabel="{{ paginationLabels.next }}"
               ></pagination-controls>
             </div>
@@ -115,6 +123,72 @@
     </div>
   </div>
 </section>
+
+
+<!-- Modal Agregar al Carrito -->
+<div class="modal fade" id="carritoModal">
+  <div class="modal-dialog modal-sm d-flex justify-content-center align-items-center">
+    <div class="modal-content">
+      <div class="modal-header bg-custom text-white">
+        <h5 class="modal-title">Agregar al Carrito</h5>
+        <div class="ms-auto">
+          <button
+            #cerrarModalCarrito
+            class="close btn btn-sm btn-danger"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+          >
+            <span>&times;</span>
+          </button>
+        </div>
+      </div>
+
+      <form (ngSubmit)="agregarAlCarrito()">
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <label for="productoNombre">Producto</label>
+            <input
+              type="text"
+              class="form-control"
+              id="productoNombre"
+              [value]="productoParaCarrito?.nombre"
+              readonly
+            >
+          </div>
+          <div class="form-group mb-3">
+            <label for="stockDisponible">Stock disponible</label>
+            <input
+              type="number"
+              class="form-control"
+              id="stockDisponible"
+              [value]="productoParaCarrito?.stock"
+              readonly
+            >
+          </div>
+          <div class="form-group mb-3">
+            <label for="cantidad">Cantidad</label>
+            <input
+              type="number"
+              class="form-control"
+              id="cantidad"
+              name="cantidad"
+              [(ngModel)]="cantidadSeleccionada"
+               [max]="productoParaCarrito?.stock"
+              min="1"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="cantidadSeleccionada < 1">
+            Agregar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!-- Agregar producto modal -->
 <div class="modal fade" id="agregarProductoModal">
@@ -304,9 +378,9 @@
 
         <!-- Botón Guardar -->
         <div class="modal-footer">
-          <button 
-            type="submit" 
-            class="btn btn-primary" 
+          <button
+            type="submit"
+            class="btn btn-primary"
             [disabled]="!guardarProducto || procesando"
             (click)="agregarOEditarProducto(productoForm)"
           >

@@ -1,3 +1,4 @@
+declare var bootstrap: any;
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +11,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { AumentoComponent } from 'src/app/aumento/aumento.component';
+import { CarritoService, ItemCarrito } from 'src/app/servicios/carrito.service';
 
 @Component({
   selector: 'app-productos',
@@ -23,7 +25,11 @@ export class ProductosComponent implements OnInit {
   producto: Producto = {} as Producto; // Producto para agregar o editar
   editMode: boolean = false; // Indicador de modo edición
   categorias: Categoria[];
-
+  carrito: ItemCarrito[] = [];
+  productoParaCarrito: Producto | null = null;
+  cantidadSeleccionada: number = 1;
+  modoEdicionCarrito: boolean = false;
+  ventaActual: { productoId: number, nombre: string, cantidad: number, precioUnitario: number }[] = [];
   guardarProducto: boolean = false;
   procesando: boolean = false;
   // Define una variable para el valor por defecto del select
@@ -35,11 +41,14 @@ export class ProductosComponent implements OnInit {
   paginationLabels: any = {
     previous: 'Anterior',
     next: 'Siguiente'
+
+
   };
 
   @ViewChild("productoForm") productoForm: NgForm;
   @ViewChild("botonCerrar") botonCerrar: ElementRef;
   @ViewChild("botonLimpiar") botonLimpiar: ElementRef;
+  @ViewChild('cerrarModalCarrito') cerrarModalCarrito: ElementRef;
   // Obtener una referencia al modal de actualización de precios usando ViewChild
   @ViewChild(AumentoComponent) actualizarPreciosModal: AumentoComponent;
   imagenPreview: string | ArrayBuffer;
@@ -49,7 +58,8 @@ export class ProductosComponent implements OnInit {
               private categoriaServicio: CategoriaServicio,
               private flashMessage: FlashMessagesService,
               private sidebarService: SidebarService,
-              private storage: AngularFireStorage) { }
+              private storage: AngularFireStorage,
+              private carritoService: CarritoService) { }
 
   ngOnInit(): void {
     this.productoServicio.getProductos().subscribe(productos => this.productos = productos);
@@ -64,6 +74,22 @@ export class ProductosComponent implements OnInit {
     });
     this.guardarProducto = false;
     this.procesando = false;
+    this.carritoService.carrito$.subscribe(items => {
+      this.carrito = items;
+    });
+    this.carritoService.itemParaEditar$.subscribe(item => {
+      if (item) {
+        const producto = this.productos.find(p => p.id === item.productoId);
+        if (!producto) return;
+
+        this.productoParaCarrito = producto;
+        this.cantidadSeleccionada = item.cantidad;
+        // Mostrar el modal
+        const modal = new bootstrap.Modal(document.getElementById('carritoModal'));
+        modal.show();
+      }
+    });
+
   }
 
   // Método para cambiar de página
@@ -79,7 +105,7 @@ export class ProductosComponent implements OnInit {
 
   onInputChange(): void {
     // Verifica si todos los campos obligatorios están completos, incluido el campo de categoría
-    this.guardarProducto = !!this.producto.nombre && !!this.producto.marca && !!this.producto.descripcion 
+    this.guardarProducto = !!this.producto.nombre && !!this.producto.marca && !!this.producto.descripcion
       && !!this.producto.stock && !!this.producto.precio && !!this.producto.categoria;
   }
 
@@ -106,12 +132,12 @@ export class ProductosComponent implements OnInit {
       this.editMode = false;
       this.guardarProducto = false; // Deshabilitar el botón al abrir en modo agregar
       this.imagenPreview = null; // Limpia la vista previa de la imagen
-      
+
       // Establecer la categoría predeterminada al cargar el modal en modo de carga
       this.producto.categoria = this.defaultValue;
     }
   }
-  
+
   // Método para abrir el modal de actualización de precios
   openActualizarPreciosModal() {
     // Verificar si el modal de actualización de precios existe antes de intentar abrirlo
@@ -121,7 +147,7 @@ export class ProductosComponent implements OnInit {
       console.error('El modal de actualización de precios no está disponible.');
     }
   }
-  
+
   agregarOEditarProducto(formulario: NgForm) {
     if (this.editMode) {
       this.editar(formulario);
@@ -129,7 +155,7 @@ export class ProductosComponent implements OnInit {
       this.agregar(formulario);
     }
   }
-  
+
 
   editar({ value, valid }: { value: Producto, valid: boolean }) {
     if (!valid) {
@@ -143,7 +169,7 @@ export class ProductosComponent implements OnInit {
       value.id = this.producto.id;
       // Editar el producto
       this.productoServicio.modificarProducto(value);
-  
+
       // Agregar un retraso de 1500 milisegundos
       setTimeout(() => {
         Swal.fire({
@@ -164,7 +190,7 @@ export class ProductosComponent implements OnInit {
       }, 1500);
     }
   }
-  
+
   agregar({ value, valid }: { value: Producto, valid: boolean }) {
     if (!valid) {
       this.flashMessage.show('Por favor completar el formulario correctamente', {
@@ -177,15 +203,15 @@ export class ProductosComponent implements OnInit {
       this.guardarProducto = true; // Bloquear el botón
       // Establecemos baja como true por defecto
       value.baja = false;
-  
+
       console.log(value);
-  
+
       const file = this.producto.imagen;
       if (file instanceof File) {
         const filePath = `images/${Date.now()}_${file.name}`;
         const fileRef = this.storage.ref(filePath);
         const task = this.storage.upload(filePath, file);
-  
+
         task.snapshotChanges().pipe(
           finalize(() => {
             fileRef.getDownloadURL().subscribe(url => {
@@ -201,7 +227,7 @@ export class ProductosComponent implements OnInit {
       }
     }
   }
-  
+
   guardarProductoFinal(producto: Producto) {
     this.productoServicio.agregarProducto(producto).then(() => {
       // Muestra un SweetAlert cuando se complete la acción
@@ -210,7 +236,7 @@ export class ProductosComponent implements OnInit {
         title: 'Producto Agregado',
         text: 'El producto se ha agregado correctamente.'
       });
-  
+
       this.productoForm.resetForm();
       this.cerrarModal();
       this.guardarProducto = false; // Desbloquear el botón
@@ -227,8 +253,8 @@ export class ProductosComponent implements OnInit {
       });
     });
   }
-  
-  
+
+
 
   eliminar() {
     if (confirm('¿Está seguro que desea eliminar el producto?')) {
@@ -260,6 +286,47 @@ export class ProductosComponent implements OnInit {
     });
   }
 
+  //PARTE DE VENTAS/CARRITO
+// Abrir el carrito
+openCarritoModal(producto: Producto) {
+  this.productoParaCarrito = producto;
+  this.cantidadSeleccionada = 1;
+}
+
+getTotal(): number {
+  return this.ventaActual.reduce((acc, item) => acc + item.cantidad * item.precioUnitario, 0);
+}
+agregarAlCarrito() {
+  if (!this.productoParaCarrito) return;
+
+  const item: ItemCarrito = {
+    productoId: this.productoParaCarrito.id,
+    nombre: this.productoParaCarrito.nombre,
+    cantidad: this.cantidadSeleccionada,
+    precioUnitario: this.productoParaCarrito.precio
+  };
+
+  this.carritoService.agregarProducto(item);
+  this.cantidadSeleccionada = 1;
+  this.cerrarModalCarrito.nativeElement.click();
+
+}
+getStockDisponible(producto: Producto): number {
+  const itemEnCarrito = this.carrito.find(i => i.productoId === producto.id);
+  const reservado = itemEnCarrito ? itemEnCarrito.cantidad : 0;
+  return producto.stock - reservado;
+}
+
+modificarCantidad(item: ItemCarrito) {
+  const producto = this.productos.find(p => p.id === item.productoId);
+  if (!producto) return;
+
+  this.productoParaCarrito = producto;
+  this.cantidadSeleccionada = item.cantidad;
+
+  const modal = new bootstrap.Modal(document.getElementById('carritoModal'));
+  modal.show();
+}
   onFileSelected(event): void {
     const file: File = event.target.files[0];
 

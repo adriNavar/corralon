@@ -38,13 +38,14 @@ import { SidebarService } from './servicios/sidebar.service';
 import { AumentoComponent } from './aumento/aumento.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { VentasComponent } from './ventas/ventas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CabeceroComponent,
     TableroComponent,
-    ProductosComponent, 
+    ProductosComponent,
     LoginComponent,
     RegistroComponent,
     ConfiguracionComponent,
@@ -55,7 +56,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CategoriasComponent,
     EditarCategoriaComponent,
     AppSidebarComponent,
-    AumentoComponent
+    AumentoComponent,
+    VentasComponent
   ],
   imports: [
     BrowserModule,
